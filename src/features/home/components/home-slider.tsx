@@ -77,7 +77,7 @@ const HomeSlider = () => {
       <Slider ref={sliderRef} {...settings}>
         {slides.map((slide) => (
           <div key={slide.id}>
-            <Card className="relative h-[540px] border-0 rounded-none">
+            <Card className="relative h-[calc(100vh-110px)] max-h-[700px] min-h-[450px] border-0 rounded-none">
               <img
                 src={slide.image}
                 alt={slide.title}
