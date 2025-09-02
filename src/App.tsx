@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
+
 const Home = lazy(() => import("./features/home"));
 const Basket = lazy(() => import("./features/basket"));
 
