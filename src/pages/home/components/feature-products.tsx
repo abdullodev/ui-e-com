@@ -1,3 +1,4 @@
+import { MainSection } from "@/components";
 import { ArrowRight, Heart, ShoppingCart, Star } from "lucide-react";
 
 interface Props {
@@ -5,10 +6,10 @@ interface Props {
 }
 const FeatureProducts = ({ featuredProducts }: Props) => {
   return (
-    <section className="py-16 bg-gray-50">
+    <MainSection>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-700 mb-4">
             Featured Products
           </h2>
           <p className="text-xl text-gray-600">Handpicked items just for you</p>
@@ -80,7 +81,7 @@ const FeatureProducts = ({ featuredProducts }: Props) => {
           </button>
         </div>
       </div>
-    </section>
+    </MainSection>
   );
 };
 

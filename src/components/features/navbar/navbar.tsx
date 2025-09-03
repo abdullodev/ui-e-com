@@ -1,51 +1,60 @@
 import { Heart, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
+const navbars = [
+  {
+    key: "1",
+    to: "/",
+    label: "Home",
+  },
+  {
+    key: "2",
+    to: "/categories",
+    label: "Categories",
+  },
+  {
+    key: "3",
+    to: "/products",
+    label: "Products",
+  },
+];
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const navigate = useNavigate();
+
+  const { pathname } = useLocation();
+
+  const isActive = (path: string) => pathname === path;
+
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-blue-600">GrapeMart</h1>
+            <h1
+              className="text-2xl font-bold text-blue-600 cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              GrapeMart
+            </h1>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <a
-                href="#"
-                className="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                Home
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                Categories
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                Deals
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                About
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
-                Contact
-              </a>
+              {navbars.map((nav) => (
+                <Link
+                  key={nav.key}
+                  to={nav.to}
+                  className={`hover:text-blue-600 ${
+                    isActive(nav.to) ? "text-blue-600" : "text-gray-500"
+                  } px-3 py-2 text-sm font-medium transition-colors`}
+                >
+                  {nav.label}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -65,13 +74,22 @@ const Navbar = () => {
 
           {/* Right side icons */}
           <div className="hidden md:flex items-center space-x-4">
-            <button className="text-gray-500 hover:text-blue-600 transition-colors">
+            <button
+              className="text-gray-500 hover:text-blue-600 transition-colors"
+              onClick={() => navigate("/profile")}
+            >
               <User className="h-6 w-6" />
             </button>
-            <button className="text-gray-500 hover:text-blue-600 transition-colors">
+            <button
+              className="text-gray-500 hover:text-blue-600 transition-colors"
+              onClick={() => navigate("/profile", { state: "wishlist" })}
+            >
               <Heart className="h-6 w-6" />
             </button>
-            <button className="text-gray-500 hover:text-blue-600 transition-colors relative">
+            <button
+              className="text-gray-500 hover:text-blue-600 transition-colors relative"
+              onClick={() => navigate("/basket")}
+            >
               <ShoppingCart className="h-6 w-6" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 3
@@ -111,36 +129,24 @@ const Navbar = () => {
                 />
               </div>
             </div>
-            <a
-              href="#"
+            <Link
+              to="/"
               className="text-gray-900 hover:text-blue-600 block px-3 py-2 text-base font-medium"
             >
               Home
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/categories"
               className="text-gray-500 hover:text-blue-600 block px-3 py-2 text-base font-medium"
             >
               Categories
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="products"
               className="text-gray-500 hover:text-blue-600 block px-3 py-2 text-base font-medium"
             >
-              Deals
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-blue-600 block px-3 py-2 text-base font-medium"
-            >
-              About
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-blue-600 block px-3 py-2 text-base font-medium"
-            >
-              Contact
-            </a>
+              Products
+            </Link>
           </div>
         </div>
       )}

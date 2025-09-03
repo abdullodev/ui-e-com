@@ -1,12 +1,14 @@
+import { MainSection } from "@/components";
+
 interface Props {
   categories: any[];
 }
 const HomeCategories = ({ categories }: Props) => {
   return (
-    <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <MainSection>
+      <div className="px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-700 mb-4">
             Shop by Category
           </h2>
           <p className="text-xl text-gray-600">
@@ -36,7 +38,7 @@ const HomeCategories = ({ categories }: Props) => {
           ))}
         </div>
       </div>
-    </section>
+    </MainSection>
   );
 };
 

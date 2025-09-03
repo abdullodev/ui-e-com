@@ -1,15 +1,5 @@
-import { Footer, Navbar } from "@/components";
-import {
-  ArrowRight,
-  Headphones,
-  Heart,
-  Shield,
-  ShoppingCart,
-  Star,
-  Truck,
-} from "lucide-react";
-import HomeCategories from "./components/home-categories";
 import FeatureProducts from "./components/feature-products";
+import HomeCategories from "./components/home-categories";
 import HomeSlider from "./components/home-slider";
 
 const Home = () => {
@@ -96,10 +86,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation Bar */}
-      <Navbar />
-
+    <>
       {/* Hero Banner */}
       <HomeSlider />
 
@@ -108,10 +95,7 @@ const Home = () => {
 
       {/* Featured Products */}
       <FeatureProducts featuredProducts={featuredProducts} />
-
-      {/* Footer */}
-      <Footer />
-    </div>
+    </>
   );
 };
 
