@@ -110,7 +110,7 @@ const Basket: React.FC = () => {
 
   const handleCheckout = (): void => {
     // Checkout logic would go here
-    console.log("Proceed to checkout");
+    navigate("/checkout");
   };
 
   const handleToggleWishlist = (itemId: number): void => {

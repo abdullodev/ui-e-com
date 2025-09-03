@@ -13,6 +13,7 @@ import Addresses from "./components/addresses";
 import Orders from "./components/orders";
 import Overview from "./components/overview";
 import Wishlist from "./components/wishlist";
+import { MainSection } from "@/components";
 
 type ActiveTab =
   | "overview"
@@ -100,37 +101,35 @@ const UserProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar */}
-          <div className="w-full lg:w-64">
-            <nav className="bg-white rounded-xl shadow-sm p-4">
-              <ul className="space-y-2">
-                {tabItems.map((tab) => (
-                  <li key={tab.id}>
-                    <button
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                        activeTab === tab.id
-                          ? "bg-blue-600 text-white"
-                          : "text-gray-600 hover:bg-gray-100"
-                      }`}
-                    >
-                      {tab.icon}
-                      <span>{tab.label}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-
-          {/* Main Content */}
-          <div className="flex-1">{renderContent()}</div>
+    <MainSection title="Profile">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Sidebar */}
+        <div className="w-full lg:w-64">
+          <nav className="bg-white rounded-xl shadow-sm p-4">
+            <ul className="space-y-2">
+              {tabItems.map((tab) => (
+                <li key={tab.id}>
+                  <button
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                      activeTab === tab.id
+                        ? "bg-blue-600 text-white"
+                        : "text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {tab.icon}
+                    <span>{tab.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
+
+        {/* Main Content */}
+        <div className="flex-1">{renderContent()}</div>
       </div>
-    </div>
+    </MainSection>
   );
 };
 
