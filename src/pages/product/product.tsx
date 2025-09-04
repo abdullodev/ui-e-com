@@ -481,7 +481,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
       >
         <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg">
           <button
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-md"
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
           >
             <Minus className="h-4 w-4" />
@@ -490,7 +490,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
             {quantity}
           </span>
           <button
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-md"
             onClick={() => setQuantity(quantity + 1)}
           >
             <Plus className="h-4 w-4" />
