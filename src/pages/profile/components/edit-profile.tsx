@@ -11,7 +11,6 @@ import {
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import type { UserProfile } from "./overview";
-import { PageTransitionWrapper } from "@/components";
 
 interface Props {
   setUserProfile: Dispatch<SetStateAction<UserProfile>>;
