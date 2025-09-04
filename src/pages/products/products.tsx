@@ -1,6 +1,7 @@
 import { MainSection, ProductCard } from "@/components";
+import { PRODUCTS } from "@/constants/product-constants";
 import { motion } from "framer-motion";
-import { containerVariants, featuredProducts } from "./common/constants";
+import { containerVariants } from "./common/constants";
 
 const Products = () => {
   return (
@@ -11,7 +12,7 @@ const Products = () => {
         initial="hidden"
         animate="visible"
       >
-        {featuredProducts.map((product, index) => (
+        {PRODUCTS.slice(0, 6).map((product, index) => (
           <ProductCard key={product.id} product={product} index={index} />
         ))}
       </motion.div>

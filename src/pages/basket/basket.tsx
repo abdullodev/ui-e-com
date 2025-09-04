@@ -1,5 +1,6 @@
 import { MainSection } from "@/components";
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
+import useCartStore, { type CartItem } from "@/store/useCartStore";
 import {
   Heart,
   Lock,
@@ -12,17 +13,6 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 
-interface CartItem {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  originalPrice: number;
-  quantity: number;
-  color: string;
-  size: string;
-}
-
 interface PromoCode {
   code: string;
   discount: number;
@@ -30,62 +20,12 @@ interface PromoCode {
 }
 
 const Basket: React.FC = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Premium Wireless Headphones",
-      image:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop",
-      price: 199.99,
-      originalPrice: 249.99,
-      quantity: 2,
-      color: "Midnight Black",
-      size: "One Size",
-    },
-    {
-      id: 2,
-      name: "Smart Fitness Watch",
-      image:
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop",
-      price: 299.99,
-      originalPrice: 399.99,
-      quantity: 1,
-      color: "Space Gray",
-      size: "42mm",
-    },
-    {
-      id: 3,
-      name: "Minimalist Backpack",
-      image:
-        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop",
-      price: 89.99,
-      originalPrice: 119.99,
-      quantity: 1,
-      color: "Charcoal",
-      size: "Medium",
-    },
-  ]);
+  const { items: cartItems, updateQuantity, removeFromCart } = useCartStore();
 
   const { navigateWithTransition } = useNavigationTransition();
 
   const [promoCode, setPromoCode] = useState<string>("");
   const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
-
-  const updateQuantity = (id: number, newQuantity: number): void => {
-    if (newQuantity === 0) {
-      setCartItems(cartItems.filter((item) => item.id !== id));
-    } else {
-      setCartItems(
-        cartItems.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item
-        )
-      );
-    }
-  };
-
-  const removeItem = (id: number): void => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
 
   const applyPromoCode = (): void => {
     if (promoCode.toLowerCase() === "save10") {
@@ -112,7 +52,7 @@ const Basket: React.FC = () => {
     navigateWithTransition("/checkout");
   };
 
-  const handleToggleWishlist = (itemId: number): void => {
+  const handleToggleWishlist = (itemId: string): void => {
     // Wishlist toggle logic
     console.log(`Toggle wishlist for item ${itemId}`);
   };
@@ -176,7 +116,7 @@ const Basket: React.FC = () => {
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
                     <img
-                      src={item.image}
+                      src={item?.images?.[0]}
                       alt={item.name}
                       className="w-24 h-24 object-cover rounded-lg"
                     />
@@ -203,7 +143,7 @@ const Basket: React.FC = () => {
                   </div>
                   <div className="flex flex-col items-end space-y-2">
                     <button
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item.id)}
                       className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-500 transition-colors p-1"
                       aria-label={`Remove ${item.name} from cart`}
                     >

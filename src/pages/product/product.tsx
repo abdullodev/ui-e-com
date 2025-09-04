@@ -1,3 +1,5 @@
+import { PRODUCTS } from "@/constants/product-constants";
+import type { Product } from "@/store/useCartStore";
 import { motion } from "framer-motion";
 import {
   Heart,
@@ -35,27 +37,10 @@ interface ProductStore {
   setQuantity: (quantity: number) => void;
 }
 
-interface Product {
-  id: string;
-  name: string;
-  price: string;
-  originalPrice: string;
-  rating: number;
-  reviews: number;
-  description: string;
-  images: string[];
-  sizes: string[];
-  colors: { name: string; hex: string }[];
-  features: string[];
-  specifications: { [key: string]: string };
-  inStock: boolean;
-  category: string;
-}
-
 interface CartItem {
   id: string;
   name: string;
-  price: string;
+  price: number;
   quantity: number;
   size: string;
   color: string;
@@ -63,47 +48,7 @@ interface CartItem {
 }
 
 // Mock product data
-const mockProduct: Product = {
-  id: "1",
-  name: "Premium Wireless Headphones",
-  price: "$299",
-  originalPrice: "$399",
-  rating: 4.8,
-  reviews: 1247,
-  description:
-    "Experience crystal-clear audio with our premium wireless headphones. Featuring active noise cancellation, 30-hour battery life, and premium comfort materials for all-day wear.",
-  images: [
-    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=600&h=600&fit=crop",
-  ],
-  sizes: ["One Size"],
-  colors: [
-    { name: "Black", hex: "#000000" },
-    { name: "White", hex: "#FFFFFF" },
-    { name: "Blue", hex: "#3B82F6" },
-    { name: "Red", hex: "#EF4444" },
-  ],
-  features: [
-    "Active Noise Cancellation",
-    "30-hour battery life",
-    "Quick charge: 5min = 3hrs",
-    "Premium comfort padding",
-    "Bluetooth 5.0",
-    "Touch controls",
-  ],
-  specifications: {
-    "Driver Size": "40mm",
-    "Frequency Response": "20Hz - 20kHz",
-    Impedance: "32 ohms",
-    Weight: "250g",
-    Connectivity: "Bluetooth 5.0, 3.5mm jack",
-    Battery: "30 hours playback",
-  },
-  inStock: true,
-  category: "Electronics",
-};
+const mockProduct: Product = PRODUCTS[0];
 
 // Simple Zustand store implementation (mock)
 let store: ProductStore = {

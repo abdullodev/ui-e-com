@@ -1,6 +1,8 @@
-import { Heart, ShoppingCart, Star } from "lucide-react";
+import useCartStore, { type Product } from "@/store/useCartStore";
 import { motion } from "framer-motion";
+import { Check, Heart, ShoppingCart, Star } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   buttonVariants,
   cardVariants,
@@ -8,17 +10,6 @@ import {
   imageVariants,
   saleTagVariants,
 } from "./common/constants";
-import { useNavigate } from "react-router-dom";
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  rating: number;
-  reviews: number;
-  price: string;
-  originalPrice: string;
-};
 
 interface ProductCardProps {
   product: Product;
@@ -27,8 +18,36 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
   const [liked, setLiked] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const navigate = useNavigate();
+
+  // Cart store hooks
+  const addToCart = useCartStore((state) => state.addToCart);
+  const isInCart = useCartStore((state) => state.isInCart);
+  const getItemQuantity = useCartStore((state) => state.getItemQuantity);
+
+  // Get cart status
+  const itemInCart = isInCart(product.id);
+  const quantity = getItemQuantity(product.id);
+
   const toggleLike = () => setLiked((prev) => !prev);
+
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation when clicking add to cart
+
+    setIsAdding(true);
+
+    addToCart(product);
+
+    // Add a small delay for better UX
+    setTimeout(() => {
+      setIsAdding(false);
+    }, 800);
+  };
+
+  const handleCardClick = () => {
+    navigate("/product/" + product.id);
+  };
 
   return (
     <motion.div
@@ -42,7 +61,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       }}
       whileInView={cardVariants.visible}
       viewport={{ once: true, margin: "-50px" }}
-      onClick={() => navigate("/product/" + product.id)}
+      onClick={handleCardClick}
     >
       {/* Image + Like + Sale */}
       <div className="relative overflow-hidden">
@@ -61,7 +80,10 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           }`}
           variants={heartVariants}
           whileTap="tap"
-          onClick={toggleLike}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleLike();
+          }}
         >
           <Heart
             className={`h-5 w-5 transition-colors ${
@@ -80,6 +102,19 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
         >
           Sale
         </motion.div>
+
+        {/* Cart quantity badge */}
+        {itemInCart && (
+          <motion.div
+            className="absolute bottom-4 left-4 bg-green-500 dark:bg-green-600 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <ShoppingCart className="h-3 w-3" />
+            {quantity}
+          </motion.div>
+        )}
       </div>
 
       {/* Content */}
@@ -145,14 +180,58 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           </div>
 
           <motion.button
-            className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center font-medium transition-colors duration-200"
+            className={`px-4 py-2 rounded-lg flex items-center font-medium transition-all duration-200 min-w-[80px] justify-center ${
+              isAdding
+                ? "bg-green-500 dark:bg-green-600 text-white"
+                : itemInCart
+                ? "bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 text-white"
+                : "bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white"
+            }`}
             variants={buttonVariants}
             whileTap="tap"
+            onClick={handleAddToCart}
+            disabled={isAdding}
           >
-            <ShoppingCart className="h-4 w-4 mr-1" />
-            Add
+            {isAdding ? (
+              <motion.div
+                className="flex items-center gap-1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <Check className="h-4 w-4" />
+                <span className="text-sm">Added!</span>
+              </motion.div>
+            ) : itemInCart ? (
+              <motion.div
+                className="flex items-center gap-1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <ShoppingCart className="h-4 w-4" />
+                <span className="text-sm">Add More</span>
+              </motion.div>
+            ) : (
+              <>
+                <ShoppingCart className="h-4 w-4 mr-1" />
+                Add
+              </>
+            )}
           </motion.button>
         </motion.div>
+
+        {/* Cart status indicator */}
+        {itemInCart && (
+          <motion.div
+            className="mt-3 text-center"
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <span className="text-sm text-green-600 dark:text-green-400 font-medium">
+              {quantity} item{quantity > 1 ? "s" : ""} in cart
+            </span>
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );
