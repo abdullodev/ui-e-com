@@ -52,7 +52,8 @@ const HomeSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     pauseOnHover: true,
-    arrows: false, // we disable default arrows and use custom
+    fade: true,
+    arrows: false,
   };
 
   return (
