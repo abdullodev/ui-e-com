@@ -34,7 +34,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       variants={cardVariants}
       initial="rest"
       whileHover="hover"
-      className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden group cursor-pointer"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl dark:shadow-gray-900/50 dark:hover:shadow-gray-900/70 transition-all duration-300 overflow-hidden group cursor-pointer border border-gray-100 dark:border-gray-700"
       style={{
         boxShadow:
           "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
@@ -52,8 +52,10 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
         />
 
         <motion.button
-          className={`absolute top-4 right-4 bg-white rounded-full p-2 shadow-md transition-colors ${
-            liked ? "bg-red-50" : "hover:bg-gray-100"
+          className={`absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors border border-gray-200 dark:border-gray-600 ${
+            liked
+              ? "bg-red-50 dark:bg-red-900/20"
+              : "hover:bg-gray-100 dark:hover:bg-gray-700"
           }`}
           variants={heartVariants}
           whileTap="tap"
@@ -61,13 +63,15 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
         >
           <Heart
             className={`h-5 w-5 transition-colors ${
-              liked ? "text-red-500 fill-current" : "text-gray-600"
+              liked
+                ? "text-red-500 fill-current"
+                : "text-gray-600 dark:text-gray-400"
             }`}
           />
         </motion.button>
 
         <motion.div
-          className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-semibold"
+          className="absolute top-4 left-4 bg-red-500 dark:bg-red-600 text-white px-2 py-1 rounded-md text-sm font-semibold"
           variants={saleTagVariants}
           initial="hidden"
           animate="visible"
@@ -80,7 +84,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       <div className="p-6">
         {/* Title */}
         <motion.h3
-          className="font-semibold text-lg mb-2 text-gray-900"
+          className="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100 transition-colors duration-200"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 + index * 0.1 }}
@@ -111,13 +115,13 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
                   className={`h-4 w-4 ${
                     i < Math.floor(product.rating)
                       ? "text-yellow-400 fill-current"
-                      : "text-gray-300"
+                      : "text-gray-300 dark:text-gray-600"
                   }`}
                 />
               </motion.div>
             ))}
           </div>
-          <span className="text-sm text-gray-600 ml-2">
+          <span className="text-sm text-gray-600 dark:text-gray-400 ml-2 transition-colors duration-200">
             ({product.reviews})
           </span>
         </motion.div>
@@ -130,16 +134,16 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           transition={{ delay: 0.7 + index * 0.1 }}
         >
           <div>
-            <span className="text-xl font-bold text-gray-900">
+            <span className="text-xl font-bold text-gray-900 dark:text-gray-100 transition-colors duration-200">
               {product.price}
             </span>
-            <span className="text-sm text-gray-500 line-through ml-2">
+            <span className="text-sm text-gray-500 dark:text-gray-400 line-through ml-2 transition-colors duration-200">
               {product.originalPrice}
             </span>
           </div>
 
           <motion.button
-            className="text-white px-4 py-2 rounded-lg flex items-center font-medium"
+            className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center font-medium transition-colors duration-200"
             variants={buttonVariants}
             whileTap="tap"
           >

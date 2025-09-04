@@ -79,20 +79,26 @@ const Profile: React.FC = () => {
         return renderAddresses();
       case "payment":
         return (
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <p>Payment methods coming soon...</p>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+            <p className="text-gray-900 dark:text-gray-100">
+              Payment methods coming soon...
+            </p>
           </div>
         );
       case "settings":
         return (
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <p>Settings coming soon...</p>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+            <p className="text-gray-900 dark:text-gray-100">
+              Settings coming soon...
+            </p>
           </div>
         );
       case "security":
         return (
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <p>Security settings coming soon...</p>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 p-6 border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+            <p className="text-gray-900 dark:text-gray-100">
+              Security settings coming soon...
+            </p>
           </div>
         );
       default:
@@ -105,16 +111,16 @@ const Profile: React.FC = () => {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar */}
         <div className="w-full lg:w-64">
-          <nav className="bg-white rounded-xl shadow-sm p-4">
+          <nav className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 p-4 border border-gray-100 dark:border-gray-700 transition-colors duration-200">
             <ul className="space-y-2">
               {tabItems.map((tab) => (
                 <li key={tab.id}>
                   <button
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
                       activeTab === tab.id
-                        ? "bg-blue-600 text-white"
-                        : "text-gray-600 hover:bg-gray-100"
+                        ? "bg-blue-600 dark:bg-blue-500 text-white shadow-sm"
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100"
                     }`}
                   >
                     {tab.icon}

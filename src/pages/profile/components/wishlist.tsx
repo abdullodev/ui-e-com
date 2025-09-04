@@ -39,19 +39,24 @@ const wishlistItems: WishlistItem[] = [
 const Wishlist = () => {
   return (
     <PageTransitionWrapper>
-      <div className="bg-white rounded-xl shadow-sm">
-        <div className="p-6 border-b border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900">Wishlist</h3>
-          <p className="text-sm text-gray-600 mt-1">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+        {/* Header */}
+        <div className="p-6 border-b border-gray-100 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Wishlist
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
             {wishlistItems.length} items saved for later
           </p>
         </div>
+
+        {/* Wishlist Items */}
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {wishlistItems.map((item) => (
               <div
                 key={item.id}
-                className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition-shadow"
+                className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-sm transition-shadow bg-white dark:bg-gray-800"
               >
                 <div className="relative">
                   <img
@@ -59,9 +64,13 @@ const Wishlist = () => {
                     alt={item.name}
                     className="w-full h-48 object-cover"
                   />
-                  <button className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors">
+
+                  {/* Remove button */}
+                  <button className="absolute top-3 right-3 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                     <Trash2 className="h-4 w-4 text-red-500" />
                   </button>
+
+                  {/* Out of stock overlay */}
                   {!item.inStock && (
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                       <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -70,12 +79,14 @@ const Wishlist = () => {
                     </div>
                   )}
                 </div>
+
+                {/* Info */}
                 <div className="p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
                     {item.name}
                   </h4>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900">
+                    <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
                       ${item.price.toFixed(2)}
                     </span>
                     <button
@@ -83,7 +94,7 @@ const Wishlist = () => {
                       className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                         item.inStock
                           ? "bg-blue-600 text-white hover:bg-blue-700"
-                          : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                          : "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
                       }`}
                     >
                       Add to Cart

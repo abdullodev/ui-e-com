@@ -77,28 +77,33 @@ const orders: Order[] = [
 const Orders = () => {
   return (
     <PageTransitionWrapper>
-      <div className="bg-white rounded-xl shadow-sm">
-        <div className="p-6 border-b border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900">Order History</h3>
-          <p className="text-sm text-gray-600 mt-1">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+        {/* Header */}
+        <div className="p-6 border-b border-gray-100 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Order History
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
             Track and manage your orders
           </p>
         </div>
+
+        {/* Orders */}
         <div className="p-6">
           <div className="space-y-4">
             {orders.map((order) => (
               <div
                 key={order.id}
-                className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
+                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-sm transition-shadow bg-white dark:bg-gray-800"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-3">
                     {getStatusIcon(order.status)}
                     <div>
-                      <h4 className="font-semibold text-gray-900">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">
                         {order.id}
                       </h4>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         Ordered on {order.date}
                       </p>
                     </div>
@@ -111,18 +116,19 @@ const Orders = () => {
                     {order.status}
                   </span>
                 </div>
+
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4 text-sm text-gray-600">
+                  <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
                     <span>{order.items} items</span>
                     {order.trackingNumber && (
                       <span>Tracking: {order.trackingNumber}</span>
                     )}
                   </div>
                   <div className="flex items-center space-x-3">
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">
                       ${order.total.toFixed(2)}
                     </span>
-                    <button className="flex items-center text-blue-600 hover:text-blue-700 text-sm">
+                    <button className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm">
                       <Eye className="h-4 w-4 mr-1" />
                       View Details
                     </button>

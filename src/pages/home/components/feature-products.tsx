@@ -24,7 +24,7 @@ const FeatureProducts = ({ featuredProducts }: Props) => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-gray-700 mb-4"
+            className="text-3xl md:text-4xl font-bold text-gray-700 dark:text-gray-200 mb-4 transition-colors duration-200"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -32,7 +32,7 @@ const FeatureProducts = ({ featuredProducts }: Props) => {
             Featured Products
           </motion.h2>
           <motion.p
-            className="text-xl text-gray-600"
+            className="text-xl text-gray-600 dark:text-gray-300 transition-colors duration-200"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
