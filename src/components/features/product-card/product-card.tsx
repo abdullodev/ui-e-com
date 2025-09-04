@@ -8,6 +8,7 @@ import {
   imageVariants,
   saleTagVariants,
 } from "./common/constants";
+import { useNavigate } from "react-router-dom";
 
 type Product = {
   id: number;
@@ -26,7 +27,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
   const [liked, setLiked] = useState(false);
-
+  const navigate = useNavigate();
   const toggleLike = () => setLiked((prev) => !prev);
 
   return (
@@ -41,6 +42,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       }}
       whileInView={cardVariants.visible}
       viewport={{ once: true, margin: "-50px" }}
+      onClick={() => navigate("/product/" + product.id)}
     >
       {/* Image + Like + Sale */}
       <div className="relative overflow-hidden">

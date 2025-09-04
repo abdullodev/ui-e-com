@@ -7,6 +7,7 @@ import { useScrollToTop } from "./hooks/useScrollToTop";
 const Home = lazy(() => import("./pages/home"));
 const Categories = lazy(() => import("./pages/categories"));
 const Products = lazy(() => import("./pages/products"));
+const Product = lazy(() => import("./pages/product"));
 const Profile = lazy(() => import("./pages/profile"));
 
 const Basket = lazy(() => import("./pages/basket"));
@@ -29,9 +30,10 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/categories" element={<Categories />} />
-          <Route path="/products" element={<Products />} />
           <Route path="/basket" element={<Basket />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product/:id" element={<Product />} />
         </Routes>
       </Suspense>
 
