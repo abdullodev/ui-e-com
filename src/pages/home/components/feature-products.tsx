@@ -1,7 +1,7 @@
 import { MainSection, ProductCard } from "@/components";
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
-import { ArrowRight, Heart, ShoppingCart, Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   featuredProducts: any[];
@@ -13,16 +13,6 @@ const containerVariants = {
     opacity: 1,
     transition: { staggerChildren: 0.2 },
   },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  hover: { scale: 1.03 },
-};
-
-const imageVariants = {
-  hover: { scale: 1.08, transition: { duration: 0.3 } },
 };
 
 const FeatureProducts = ({ featuredProducts }: Props) => {

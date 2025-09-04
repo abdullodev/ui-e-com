@@ -14,12 +14,6 @@ const containerVariants = {
   },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  hover: { scale: 1.05 },
-};
-
 const HomeCategories = ({ categories }: Props) => {
   return (
     <MainSection>

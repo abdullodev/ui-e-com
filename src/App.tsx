@@ -1,13 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import {
-  Footer,
-  LoadingSpinner,
-  Navbar,
-  PageTransitionWrapper,
-} from "./components";
-import { useScrollToTop } from "./hooks/useScrollToTop";
+import { Footer, Navbar, PageTransitionWrapper } from "./components";
 import { PageTransitionProvider } from "./components/animations/page-transition-context";
+import { useScrollToTop } from "./hooks/useScrollToTop";
 
 const Home = lazy(() => import("./pages/home"));
 const Categories = lazy(() => import("./pages/categories"));
