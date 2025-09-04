@@ -1,3 +1,3 @@
-import Checkout from "./checkout";
+import Checkout from "./checkout-wrapper";
 
 export default Checkout;

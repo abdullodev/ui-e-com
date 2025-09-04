@@ -1,3 +1,4 @@
+import { PageTransitionWrapper } from "@/components";
 import { CheckCircle, Clock, Eye, Package, Truck, X } from "lucide-react";
 import React from "react";
 
@@ -75,60 +76,64 @@ const orders: Order[] = [
 
 const Orders = () => {
   return (
-    <div className="bg-white rounded-xl shadow-sm">
-      <div className="p-6 border-b border-gray-100">
-        <h3 className="text-lg font-semibold text-gray-900">Order History</h3>
-        <p className="text-sm text-gray-600 mt-1">
-          Track and manage your orders
-        </p>
-      </div>
-      <div className="p-6">
-        <div className="space-y-4">
-          {orders.map((order) => (
-            <div
-              key={order.id}
-              className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center space-x-3">
-                  {getStatusIcon(order.status)}
-                  <div>
-                    <h4 className="font-semibold text-gray-900">{order.id}</h4>
-                    <p className="text-sm text-gray-600">
-                      Ordered on {order.date}
-                    </p>
+    <PageTransitionWrapper>
+      <div className="bg-white rounded-xl shadow-sm">
+        <div className="p-6 border-b border-gray-100">
+          <h3 className="text-lg font-semibold text-gray-900">Order History</h3>
+          <p className="text-sm text-gray-600 mt-1">
+            Track and manage your orders
+          </p>
+        </div>
+        <div className="p-6">
+          <div className="space-y-4">
+            {orders.map((order) => (
+              <div
+                key={order.id}
+                className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-3">
+                    {getStatusIcon(order.status)}
+                    <div>
+                      <h4 className="font-semibold text-gray-900">
+                        {order.id}
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Ordered on {order.date}
+                      </p>
+                    </div>
+                  </div>
+                  <span
+                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
+                      order.status
+                    )}`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4 text-sm text-gray-600">
+                    <span>{order.items} items</span>
+                    {order.trackingNumber && (
+                      <span>Tracking: {order.trackingNumber}</span>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <span className="font-semibold text-gray-900">
+                      ${order.total.toFixed(2)}
+                    </span>
+                    <button className="flex items-center text-blue-600 hover:text-blue-700 text-sm">
+                      <Eye className="h-4 w-4 mr-1" />
+                      View Details
+                    </button>
                   </div>
                 </div>
-                <span
-                  className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-                    order.status
-                  )}`}
-                >
-                  {order.status}
-                </span>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4 text-sm text-gray-600">
-                  <span>{order.items} items</span>
-                  {order.trackingNumber && (
-                    <span>Tracking: {order.trackingNumber}</span>
-                  )}
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="font-semibold text-gray-900">
-                    ${order.total.toFixed(2)}
-                  </span>
-                  <button className="flex items-center text-blue-600 hover:text-blue-700 text-sm">
-                    <Eye className="h-4 w-4 mr-1" />
-                    View Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </PageTransitionWrapper>
   );
 };
 

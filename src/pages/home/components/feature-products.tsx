@@ -1,84 +1,80 @@
-import { MainSection } from "@/components";
+import { MainSection, ProductCard } from "@/components";
+import { useNavigationTransition } from "@/hooks/useNavigateTransition";
 import { ArrowRight, Heart, ShoppingCart, Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface Props {
   featuredProducts: any[];
 }
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  hover: { scale: 1.03 },
+};
+
+const imageVariants = {
+  hover: { scale: 1.08, transition: { duration: 0.3 } },
+};
+
 const FeatureProducts = ({ featuredProducts }: Props) => {
+  const { navigateWithTransition } = useNavigationTransition();
+
   return (
     <MainSection>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-700 mb-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-gray-700 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             Featured Products
-          </h2>
-          <p className="text-xl text-gray-600">Handpicked items just for you</p>
+          </motion.h2>
+          <motion.p
+            className="text-xl text-gray-600"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            Handpicked items just for you
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-            >
-              <div className="relative">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <button className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors">
-                  <Heart className="h-5 w-5 text-gray-600" />
-                </button>
-                <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-semibold">
-                  Sale
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-semibold text-lg mb-2 text-gray-900">
-                  {product.name}
-                </h3>
-                <div className="flex items-center mb-3">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${
-                          i < Math.floor(product.rating)
-                            ? "text-yellow-400 fill-current"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-sm text-gray-600 ml-2">
-                    ({product.reviews})
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-xl font-bold text-gray-900">
-                      {product.price}
-                    </span>
-                    <span className="text-sm text-gray-500 line-through ml-2">
-                      {product.originalPrice}
-                    </span>
-                  </div>
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center">
-                    <ShoppingCart className="h-4 w-4 mr-1" />
-                    Add
-                  </button>
-                </div>
-              </div>
-            </div>
+        {/* Product Grid */}
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          {featuredProducts.map((product, index) => (
+            <ProductCard key={product.id} product={product} index={index} />
           ))}
-        </div>
+        </motion.div>
 
+        {/* CTA Button */}
         <div className="text-center mt-12">
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center">
+          <motion.button
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center"
+            onClick={() => navigateWithTransition("/products")}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             View All Products
             <ArrowRight className="h-5 w-5 ml-2" />
-          </button>
+          </motion.button>
         </div>
       </div>
     </MainSection>

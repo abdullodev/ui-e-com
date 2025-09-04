@@ -1,6 +1,7 @@
+import { useNavigationTransition } from "@/hooks/useNavigateTransition";
 import { Heart, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const navbars = [
   {
     key: "1",
@@ -21,7 +22,7 @@ const navbars = [
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navigate = useNavigate();
+  const { navigateWithTransition } = useNavigationTransition();
 
   const { pathname } = useLocation();
 
@@ -35,7 +36,7 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <h1
               className="text-2xl font-bold text-blue-600 cursor-pointer"
-              onClick={() => navigate("/")}
+              onClick={() => navigateWithTransition("/")}
             >
               GrapeMart
             </h1>
@@ -45,15 +46,15 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navbars.map((nav) => (
-                <Link
+                <button
                   key={nav.key}
-                  to={nav.to}
+                  onClick={() => navigateWithTransition(nav.to)}
                   className={`hover:text-blue-600 ${
                     isActive(nav.to) ? "text-blue-600" : "text-gray-500"
-                  } px-3 py-2 text-sm font-medium transition-colors`}
+                  } px-3 py-2 text-sm font-medium transition-colors cursor-pointer`}
                 >
                   {nav.label}
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -75,20 +76,20 @@ const Navbar = () => {
           {/* Right side icons */}
           <div className="hidden md:flex items-center space-x-4">
             <button
-              className="text-gray-500 hover:text-blue-600 transition-colors"
-              onClick={() => navigate("/profile")}
+              className="text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
+              onClick={() => navigateWithTransition("/profile")}
             >
               <User className="h-6 w-6" />
             </button>
             <button
-              className="text-gray-500 hover:text-blue-600 transition-colors"
-              onClick={() => navigate("/profile", { state: "wishlist" })}
+              className="text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
+              onClick={() => navigateWithTransition("/profile")}
             >
               <Heart className="h-6 w-6" />
             </button>
             <button
-              className="text-gray-500 hover:text-blue-600 transition-colors relative"
-              onClick={() => navigate("/basket")}
+              className="text-gray-500 hover:text-blue-600 transition-colors relative cursor-pointer"
+              onClick={() => navigateWithTransition("/basket")}
             >
               <ShoppingCart className="h-6 w-6" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">

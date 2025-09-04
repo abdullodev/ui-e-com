@@ -54,7 +54,7 @@ const tabItems: Array<{
   { id: "security", label: "Security", icon: <Shield className="h-4 w-4" /> },
 ];
 
-const UserProfilePage: React.FC = () => {
+const Profile: React.FC = () => {
   const { state } = useLocation();
 
   const [activeTab, setActiveTab] = useState<ActiveTab>(state || "overview");
@@ -133,4 +133,4 @@ const UserProfilePage: React.FC = () => {
   );
 };
 
-export default UserProfilePage;
+export default Profile;

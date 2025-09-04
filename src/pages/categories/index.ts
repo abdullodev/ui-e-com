@@ -1,3 +1,3 @@
-import Categories from "./categories";
+import Categories from "./categories-wrapper";
 
 export default Categories;

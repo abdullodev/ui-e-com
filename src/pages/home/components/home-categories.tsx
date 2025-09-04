@@ -1,42 +1,60 @@
-import { MainSection } from "@/components";
+import { CategoryCard, MainSection } from "@/components";
+import type { ICategory } from "@/components/features/category-card/category-card";
+import { motion } from "framer-motion";
 
 interface Props {
-  categories: any[];
+  categories: ICategory[];
 }
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  hover: { scale: 1.05 },
+};
+
 const HomeCategories = ({ categories }: Props) => {
   return (
     <MainSection>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-700 mb-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-gray-700 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             Shop by Category
-          </h2>
-          <p className="text-xl text-gray-600">
+          </motion.h2>
+
+          <motion.p
+            className="text-xl text-gray-600"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             Explore our wide range of products
-          </p>
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {categories.map((category, index) => (
-            <div
-              key={index}
-              className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-            >
-              <div className="aspect-w-16 aspect-h-10">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h3 className="text-xl font-bold mb-1">{category.name}</h3>
-                <p className="text-sm opacity-90">{category.itemCount}</p>
-              </div>
-            </div>
+            <CategoryCard category={category} index={index} key={category.id} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </MainSection>
   );

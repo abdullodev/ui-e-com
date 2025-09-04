@@ -1,2 +1,2 @@
-import Home from "./home";
+import Home from "./home-wrapper";
 export default Home;

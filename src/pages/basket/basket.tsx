@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-import {
-  ShoppingCart,
-  Plus,
-  Minus,
-  Trash2,
-  Heart,
-  ArrowLeft,
-  Lock,
-  Truck,
-  RotateCcw,
-} from "lucide-react";
 import { MainSection } from "@/components";
-import { useNavigate } from "react-router-dom";
+import { useNavigationTransition } from "@/hooks/useNavigateTransition";
+import {
+  Heart,
+  Lock,
+  Minus,
+  Plus,
+  RotateCcw,
+  ShoppingCart,
+  Trash2,
+  Truck,
+} from "lucide-react";
+import React, { useState } from "react";
 
 interface CartItem {
   id: number;
@@ -67,7 +66,7 @@ const Basket: React.FC = () => {
     },
   ]);
 
-  const navigate = useNavigate();
+  const { navigateWithTransition } = useNavigationTransition();
 
   const [promoCode, setPromoCode] = useState<string>("");
   const [appliedPromo, setAppliedPromo] = useState<PromoCode | null>(null);
@@ -105,12 +104,12 @@ const Basket: React.FC = () => {
 
   const handleContinueShopping = (): void => {
     // Navigation logic would go here
-    navigate("/products");
+    navigateWithTransition("/products");
   };
 
   const handleCheckout = (): void => {
     // Checkout logic would go here
-    navigate("/checkout");
+    navigateWithTransition("/checkout");
   };
 
   const handleToggleWishlist = (itemId: number): void => {

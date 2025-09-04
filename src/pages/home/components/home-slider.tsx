@@ -1,10 +1,9 @@
 // src/components/HomeSlider.tsx
-import { useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import Slider, { type Settings } from "react-slick";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
+import Slider, { type Settings } from "react-slick";
 
 type Slide = {
   id: number;
@@ -100,9 +99,6 @@ const HomeSlider = () => {
                 >
                   {slide.description}
                 </motion.p>
-                <Button variant="secondary" className="rounded-xl shadow-md">
-                  {slide.buttonLabel}
-                </Button>
               </CardContent>
             </Card>
           </div>

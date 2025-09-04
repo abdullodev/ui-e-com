@@ -1,3 +1,3 @@
-import Categories from "./products";
+import ProductWrapper from "./product-wrapper";
 
-export default Categories;
+export default ProductWrapper;
