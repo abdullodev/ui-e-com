@@ -12,7 +12,7 @@ const Products = () => {
         initial="hidden"
         animate="visible"
       >
-        {PRODUCTS.slice(0, 6).map((product, index) => (
+        {PRODUCTS.map((product, index) => (
           <ProductCard key={product.id} product={product} index={index} />
         ))}
       </motion.div>

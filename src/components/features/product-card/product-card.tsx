@@ -86,6 +86,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           alt={product.name}
           className="w-full h-64 object-cover"
           variants={imageVariants}
+          loading="lazy"
         />
 
         {/* Enhanced Heart Button with Like State */}
