@@ -1,6 +1,11 @@
 import { MainSection } from "@/components";
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
-import useCartStore, { type CartItem } from "@/store/useCartStore";
+import useCartStore, {
+  type CartItem,
+  type Product,
+} from "@/store/useCartStore";
+import useWishlistStore from "@/store/useWishlistStore";
+import { motion } from "framer-motion";
 import {
   Heart,
   Lock,
@@ -20,7 +25,15 @@ interface PromoCode {
 }
 
 const Basket: React.FC = () => {
-  const { items: cartItems, updateQuantity, removeFromCart } = useCartStore();
+  const [isLike, setIsLike] = useState(false);
+
+  const {
+    items: cartItems,
+    updateQuantity,
+    removeItemCompletely,
+  } = useCartStore();
+
+  const { toggleWishlist, isInWishlist } = useWishlistStore();
 
   const { navigateWithTransition } = useNavigationTransition();
 
@@ -52,9 +65,14 @@ const Basket: React.FC = () => {
     navigateWithTransition("/checkout");
   };
 
-  const handleToggleWishlist = (itemId: string): void => {
-    // Wishlist toggle logic
-    console.log(`Toggle wishlist for item ${itemId}`);
+  const handleToggleWishlist = (item: Product): void => {
+    setIsLike(true);
+
+    toggleWishlist(item);
+
+    setTimeout(() => {
+      setIsLike(false);
+    }, 500);
   };
 
   // Calculations
@@ -142,20 +160,37 @@ const Basket: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex flex-col items-end space-y-2">
-                    <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-500 transition-colors p-1"
+                    <motion.button
+                      className={`rounded-full p-2 shadow-md transition-all duration-300 border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      onClick={() => removeItemCompletely(item.id)}
                       aria-label={`Remove ${item.name} from cart`}
                     >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => handleToggleWishlist(item.id)}
-                      className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-500 transition-colors p-1"
+                      <Trash2 className="h-5 w-5 text-gray-600 dark:text-gray-400 transition-all duration-300 hover:text-red-500 dark:hover:text-red-500" />
+                    </motion.button>
+                    <motion.button
+                      className={`rounded-full p-2 shadow-md transition-all duration-300 border ${
+                        isInWishlist(item.id)
+                          ? "bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700 scale-105"
+                          : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      }`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      onClick={() => handleToggleWishlist(item)}
                       aria-label={`Add ${item.name} to wishlist`}
+                      disabled={isLike}
                     >
-                      <Heart className="h-4 w-4" />
-                    </button>
+                      <Heart
+                        className={`h-5 w-5 transition-all duration-300 ${
+                          isInWishlist(item.id)
+                            ? "text-red-500 fill-current scale-110"
+                            : "text-gray-600 dark:text-gray-400 hover:text-red-400"
+                        }`}
+                      />
+                    </motion.button>
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-4">

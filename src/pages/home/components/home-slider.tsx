@@ -57,7 +57,7 @@ const HomeSlider = () => {
   };
 
   return (
-    <div className="relative w-full mt-5 max-w-[1200px] mx-auto rounded-2xl overflow-hidden shadow-lg">
+    <div className="relative w-full mx-auto rounded-2xl overflow-hidden shadow-lg">
       {/* Custom Prev Button */}
       <button
         onClick={() => sliderRef.current?.slickPrev()}
@@ -77,7 +77,7 @@ const HomeSlider = () => {
       <Slider ref={sliderRef} {...settings}>
         {slides.map((slide) => (
           <div key={slide.id}>
-            <Card className="relative h-[calc(100vh-110px)] max-h-[700px] min-h-[450px] border-0 rounded-none">
+            <Card className="relative h-[calc(100vh-130px)] max-h-[700px] min-h-[450px] border-0 rounded-none">
               <img
                 src={slide.image}
                 alt={slide.title}

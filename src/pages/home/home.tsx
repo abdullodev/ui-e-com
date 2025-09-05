@@ -1,4 +1,5 @@
-import { PageTransitionWrapper } from "@/components";
+import { MainSection, PageTransitionWrapper } from "@/components";
+import { PRODUCTS } from "@/constants/product-constants";
 import FeatureProducts from "./components/feature-products";
 import HomeCategories from "./components/home-categories";
 import HomeSlider from "./components/home-slider";
@@ -48,60 +49,14 @@ const categories = [
   },
 ];
 
-const featuredProducts = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    price: "$199.99",
-    originalPrice: "$249.99",
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop",
-    rating: 4.8,
-    reviews: 324,
-  },
-  {
-    id: 2,
-    name: "Smart Watch",
-    price: "$299.99",
-    originalPrice: "$399.99",
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop",
-    rating: 4.9,
-    reviews: 156,
-  },
-  {
-    id: 3,
-    name: "Premium Backpack",
-    price: "$89.99",
-    originalPrice: "$129.99",
-    image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop",
-    rating: 4.7,
-    reviews: 89,
-  },
-  {
-    id: 4,
-    name: "Coffee Maker",
-    price: "$159.99",
-    originalPrice: "$199.99",
-    image:
-      "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&h=300&fit=crop",
-    rating: 4.6,
-    reviews: 234,
-  },
-];
-
 const Home = () => {
   return (
     <PageTransitionWrapper>
-      {/* Hero Banner */}
-      <HomeSlider />
-
-      {/* Categories Section */}
+      <MainSection className="pt-4 md:pt-8 pb-6">
+        <HomeSlider />
+      </MainSection>
       <HomeCategories categories={categories} />
-
-      {/* Featured Products */}
-      <FeatureProducts featuredProducts={featuredProducts} />
+      <FeatureProducts featuredProducts={PRODUCTS.slice(0, 8)} />
     </PageTransitionWrapper>
   );
 };

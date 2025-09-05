@@ -1,21 +1,13 @@
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { Monitor, Moon, Sun } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
 
-interface Props {
-  setIsThemeMenuOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-const ThemeMode = ({ setIsThemeMenuOpen }: Props) => {
+const ThemeMode = () => {
   const { theme, setLightTheme, setDarkTheme, setSystemTheme } = useDarkMode();
 
   return (
     <div className="absolute p-2 right-0 mt-2 w-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50">
       <button
-        onClick={() => {
-          setLightTheme();
-          setIsThemeMenuOpen(false);
-        }}
+        onClick={setLightTheme}
         className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2 rounded-md ${
           theme === "light"
             ? "text-blue-600 dark:text-blue-400"
@@ -26,10 +18,7 @@ const ThemeMode = ({ setIsThemeMenuOpen }: Props) => {
         Light
       </button>
       <button
-        onClick={() => {
-          setDarkTheme();
-          setIsThemeMenuOpen(false);
-        }}
+        onClick={setDarkTheme}
         className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2 rounded-md ${
           theme === "dark"
             ? "text-blue-600 dark:text-blue-400"
@@ -40,10 +29,7 @@ const ThemeMode = ({ setIsThemeMenuOpen }: Props) => {
         Dark
       </button>
       <button
-        onClick={() => {
-          setSystemTheme();
-          setIsThemeMenuOpen(false);
-        }}
+        onClick={setSystemTheme}
         className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2 rounded-md ${
           theme === "system"
             ? "text-blue-600 dark:text-blue-400"

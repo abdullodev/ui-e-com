@@ -1,9 +1,10 @@
 import { Facebook, Instagram, Mail, Twitter } from "lucide-react";
+import MainSection from "../main-section";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <MainSection>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
@@ -142,7 +143,7 @@ const Footer = () => {
             customers.
           </p>
         </div>
-      </div>
+      </MainSection>
     </footer>
   );
 };

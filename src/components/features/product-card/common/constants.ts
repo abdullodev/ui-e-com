@@ -148,7 +148,7 @@ export const buttonVariants = {
       damping: 20,
     },
   },
-  tap: { scale: 0.95 },
+  tap: { scale: 0.9 },
 } as const;
 
 export const saleTagVariants = {

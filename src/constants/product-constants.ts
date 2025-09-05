@@ -11,8 +11,8 @@ export const PRODUCTS: Product[] = [
     description:
       "The latest iPhone with A16 Bionic chip, Dynamic Island, and ProMotion display.",
     images: [
-      "https://store.storeimages.cdn-apple.com/iphone14pro-front.jpg",
-      "https://store.storeimages.cdn-apple.com/iphone14pro-back.jpg",
+      "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_iPhone-14-Pro_Deep-Purple-Availability-220907.jpg",
+      "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_iPhone-14-Pro_Silver-Availability-220907.jpg",
     ],
     sizes: [],
     colors: [
@@ -40,7 +40,9 @@ export const PRODUCTS: Product[] = [
     reviews: 8921,
     description:
       "Comfortable lifestyle sneakers with a large Air unit for maximum cushioning.",
-    images: ["https://static.nike.com/airmax270.jpg"],
+    images: [
+      "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/air-max-270-mens-shoes-KkLcGR.png",
+    ],
     sizes: ["7", "8", "9", "10", "11", "12"],
     colors: [
       { name: "Black/White", hex: "#000000" },
@@ -65,8 +67,8 @@ export const PRODUCTS: Product[] = [
     reviews: 10345,
     description: "Samsung’s flagship smartphone with 200MP camera and S Pen.",
     images: [
-      "https://images.samsung.com/s23ultra-front.jpg",
-      "https://images.samsung.com/s23ultra-back.jpg",
+      "https://images.samsung.com/is/image/samsung/p6pim/levant/2302/gallery/levant-galaxy-s23-ultra-s918-sm-s918bzkamea-thumb-534695123",
+      "https://images.samsung.com/is/image/samsung/p6pim/levant/2302/gallery/levant-galaxy-s23-ultra-s918-sm-s918bzkamea-534695125",
     ],
     sizes: [],
     colors: [
@@ -92,7 +94,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviews: 14231,
     description: "Industry-leading noise canceling wireless headphones.",
-    images: ["https://sony.com/wh1000xm5.jpg"],
+    images: ["https://m.media-amazon.com/images/I/61vJtKbAssL._AC_SL1500_.jpg"],
     sizes: [],
     colors: [
       { name: "Black", hex: "#000000" },
@@ -117,7 +119,9 @@ export const PRODUCTS: Product[] = [
     reviews: 7531,
     description:
       "High-performance running shoes with responsive Boost cushioning.",
-    images: ["https://adidas.com/ultraboost22.jpg"],
+    images: [
+      "https://assets.adidas.com/images/w_600,f_auto,q_auto/4f61b60e7e08441a8965adf200f77912_9366/Ultraboost_22_Shoes_Black_GX3066_01_standard.jpg",
+    ],
     sizes: ["7", "8", "9", "10", "11"],
     colors: [
       { name: "Core Black", hex: "#000000" },
@@ -142,7 +146,9 @@ export const PRODUCTS: Product[] = [
     reviews: 4521,
     description:
       "Powerful MacBook Pro with M2 Pro chip and Liquid Retina XDR display.",
-    images: ["https://apple.com/macbookpro14.jpg"],
+    images: [
+      "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-silver-select-202301?wid=2000&hei=2000&fmt=jpeg&qlt=90&.v=1671304673229",
+    ],
     sizes: [],
     colors: [
       { name: "Space Gray", hex: "#2E2E2E" },
@@ -167,7 +173,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.5,
     reviews: 2314,
     description: "Classic straight fit jeans with iconic Levi’s design.",
-    images: ["https://levi.com/501jeans.jpg"],
+    images: ["https://lsco.scene7.com/is/image/lsco/005010194-front-pdp"],
     sizes: ["30", "32", "34", "36", "38"],
     colors: [{ name: "Dark Blue", hex: "#00008B" }],
     features: ["Durable Denim", "Classic Fit"],
@@ -189,7 +195,9 @@ export const PRODUCTS: Product[] = [
     reviews: 5213,
     description:
       "Smartwatch with health monitoring, always-on display, and crash detection.",
-    images: ["https://apple.com/applewatch8.jpg"],
+    images: [
+      "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQKQ3_VW_34FR+watch-45-alum-starlight-nc-s8_VW_34FR_WF_CO?wid=2000&hei=2000&fmt=jpeg&qlt=90&.v=1661471340499",
+    ],
     sizes: ["41mm", "45mm"],
     colors: [
       { name: "Midnight", hex: "#191970" },
@@ -214,7 +222,7 @@ export const PRODUCTS: Product[] = [
     reviews: 3120,
     description:
       "Professional mirrorless camera with 24.2MP sensor and 4K 60p video.",
-    images: ["https://canon.com/eosr6.jpg"],
+    images: ["https://m.media-amazon.com/images/I/81WcCgWqvFL._AC_SL1500_.jpg"],
     sizes: [],
     colors: [{ name: "Black", hex: "#000000" }],
     features: ["24.2MP Full-Frame", "4K 60p", "Dual Pixel AF II"],
@@ -236,7 +244,7 @@ export const PRODUCTS: Product[] = [
     reviews: 18340,
     description:
       "Next-gen gaming console with ultra-fast SSD and immersive gameplay.",
-    images: ["https://sony.com/ps5.jpg"],
+    images: ["https://m.media-amazon.com/images/I/619BkvKW35L._AC_SL1500_.jpg"],
     sizes: [],
     colors: [{ name: "White/Black", hex: "#FFFFFF" }],
     features: ["4K Gaming", "Ray Tracing", "DualSense Controller"],

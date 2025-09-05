@@ -1,4 +1,5 @@
 import useCartStore, { type Product } from "@/store/useCartStore";
+import useWishlistStore from "@/store/useWishlistStore"; // Your liked products store
 import { motion } from "framer-motion";
 import { Check, Heart, ShoppingCart, Star } from "lucide-react";
 import { useState } from "react";
@@ -17,8 +18,8 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
-  const [liked, setLiked] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [isLike, setIsLike] = useState(false);
   const navigate = useNavigate();
 
   // Cart store hooks
@@ -26,11 +27,26 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
   const isInCart = useCartStore((state) => state.isInCart);
   const getItemQuantity = useCartStore((state) => state.getItemQuantity);
 
-  // Get cart status
+  // Liked products store hooks
+  const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
+  const isInWishlist = useWishlistStore((state) => state.isInWishlist);
+
+  // Get states
   const itemInCart = isInCart(product.id);
   const quantity = getItemQuantity(product.id);
+  const isLiked = isInWishlist(product.id); // Check if product is liked
 
-  const toggleLike = () => setLiked((prev) => !prev);
+  const handleLikeToggle = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation
+
+    setIsLike(true);
+
+    toggleWishlist(product);
+
+    setTimeout(() => {
+      setIsLike(false);
+    }, 500);
+  };
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent navigation when clicking add to cart
@@ -42,7 +58,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
     // Add a small delay for better UX
     setTimeout(() => {
       setIsAdding(false);
-    }, 800);
+    }, 500);
   };
 
   const handleCardClick = () => {
@@ -66,30 +82,29 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       {/* Image + Like + Sale */}
       <div className="relative overflow-hidden">
         <motion.img
-          src={product.image}
+          src={product.images[0]}
           alt={product.name}
           className="w-full h-64 object-cover"
           variants={imageVariants}
         />
 
+        {/* Enhanced Heart Button with Like State */}
         <motion.button
-          className={`absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors border border-gray-200 dark:border-gray-600 ${
-            liked
-              ? "bg-red-50 dark:bg-red-900/20"
-              : "hover:bg-gray-100 dark:hover:bg-gray-700"
+          className={`absolute top-4 right-4 rounded-full p-2 shadow-md transition-all duration-300 border ${
+            isLiked
+              ? "bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700 scale-105"
+              : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
           }`}
           variants={heartVariants}
           whileTap="tap"
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleLike();
-          }}
+          onClick={handleLikeToggle}
+          disabled={isLike}
         >
           <Heart
-            className={`h-5 w-5 transition-colors ${
-              liked
-                ? "text-red-500 fill-current"
-                : "text-gray-600 dark:text-gray-400"
+            className={`h-5 w-5 transition-all duration-300 ${
+              isLiked
+                ? "text-red-500 fill-current scale-110"
+                : "text-gray-600 dark:text-gray-400 hover:text-red-400"
             }`}
           />
         </motion.button>
@@ -115,16 +130,30 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             {quantity}
           </motion.div>
         )}
+
+        {/* Liked indicator badge */}
+        {isLiked && (
+          <motion.div
+            className="absolute bottom-4 right-4 bg-red-500 dark:bg-red-600 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
+            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+          >
+            <Heart className="h-3 w-3 fill-current" />
+            Liked
+          </motion.div>
+        )}
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-2 md:p-4 flex flex-col justify-between">
         {/* Title */}
         <motion.h3
-          className="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100 transition-colors duration-200"
+          className="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100 transition-colors duration-200 truncate"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 + index * 0.1 }}
+          title={product.name}
         >
           {product.name}
         </motion.h3>
@@ -170,12 +199,12 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 + index * 0.1 }}
         >
-          <div>
-            <span className="text-xl font-bold text-gray-900 dark:text-gray-100 transition-colors duration-200">
-              {product.price}
-            </span>
+          <div className="flex flex-col">
             <span className="text-sm text-gray-500 dark:text-gray-400 line-through ml-2 transition-colors duration-200">
               {product.originalPrice}
+            </span>
+            <span className="text-xl font-bold text-gray-900 dark:text-gray-100 transition-colors duration-200">
+              {product.price}
             </span>
           </div>
 
@@ -218,20 +247,6 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             )}
           </motion.button>
         </motion.div>
-
-        {/* Cart status indicator */}
-        {itemInCart && (
-          <motion.div
-            className="mt-3 text-center"
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <span className="text-sm text-green-600 dark:text-green-400 font-medium">
-              {quantity} item{quantity > 1 ? "s" : ""} in cart
-            </span>
-          </motion.div>
-        )}
       </div>
     </motion.div>
   );

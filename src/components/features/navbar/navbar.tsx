@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ThemeMode from "./feature/theme-mode";
 import MobileMenu from "./feature/mobile-menu";
+import ThemeMode from "./feature/theme-mode";
 
 const navbars = [
   {
@@ -123,9 +123,7 @@ const Navbar = () => {
               </button>
 
               {/* Theme Dropdown */}
-              {isThemeMenuOpen && (
-                <ThemeMode setIsThemeMenuOpen={setIsThemeMenuOpen} />
-              )}
+              {isThemeMenuOpen && <ThemeMode />}
             </div>
 
             <button
