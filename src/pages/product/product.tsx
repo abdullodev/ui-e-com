@@ -2,18 +2,18 @@ import { PRODUCTS } from "@/constants/product-constants";
 import type { Product } from "@/store/useCartStore";
 import { motion } from "framer-motion";
 import React from "react";
+import { useParams } from "react-router-dom";
 import { containerVariants } from "./common/constants";
 import ProductFeatures from "./components/product-features";
 import ProductImageGallery from "./components/product-image-gallery";
 import ProductInfo from "./components/product-info";
 import ProductSpecifications from "./components/product-specifications";
 
-// Mock product data
-const mockProduct: Product = PRODUCTS[0];
-
 // Main ProductPage Component
 const ProductPage: React.FC = () => {
-  const product = mockProduct;
+  const { id } = useParams();
+
+  const product: Product = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
 
   if (!product) {
     return (
