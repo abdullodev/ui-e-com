@@ -1,11 +1,10 @@
 import useCartStore, { type Product } from "@/store/useCartStore";
 import useWishlistStore from "@/store/useWishlistStore"; // Your liked products store
 import { motion } from "framer-motion";
-import { Check, Heart, ShoppingCart, Star } from "lucide-react";
-import { useState } from "react";
+import { Heart, ShoppingCart, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import AddRemoveButton from "../add-remove-button";
 import {
-  buttonVariants,
   cardVariants,
   heartVariants,
   imageVariants,
@@ -18,47 +17,28 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
-  const [isAdding, setIsAdding] = useState(false);
-  const [isLike, setIsLike] = useState(false);
   const navigate = useNavigate();
-
-  // Cart store hooks
-  const addToCart = useCartStore((state) => state.addToCart);
-  const isInCart = useCartStore((state) => state.isInCart);
-  const getItemQuantity = useCartStore((state) => state.getItemQuantity);
 
   // Liked products store hooks
   const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
-  const isInWishlist = useWishlistStore((state) => state.isInWishlist);
 
   // Get states
-  const itemInCart = isInCart(product.id);
-  const quantity = getItemQuantity(product.id);
-  const isLiked = isInWishlist(product.id); // Check if product is liked
+  const itemInCart = useCartStore((state) =>
+    state.items.some((item) => item.id === product.id)
+  );
+
+  const quantity = useCartStore((state) => {
+    const item = state.items.find((item) => item.id === product.id);
+    return item ? item.quantity : 0;
+  });
+
+  const isLiked = useWishlistStore((state) =>
+    state.items.some((item) => item.id === product.id)
+  ); // Check if product is liked
 
   const handleLikeToggle = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent navigation
-
-    setIsLike(true);
-
     toggleWishlist(product);
-
-    setTimeout(() => {
-      setIsLike(false);
-    }, 0);
-  };
-
-  const handleAddToCart = async (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent navigation when clicking add to cart
-
-    setIsAdding(true);
-
-    addToCart(product);
-
-    // Add a small delay for better UX
-    setTimeout(() => {
-      setIsAdding(false);
-    }, 700);
   };
 
   const handleCardClick = () => {
@@ -99,7 +79,6 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           variants={heartVariants}
           whileTap="tap"
           onClick={handleLikeToggle}
-          disabled={isLike}
         >
           <Heart
             className={`h-5 w-5 transition-all duration-300 ${
@@ -209,44 +188,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             </span>
           </div>
 
-          <motion.button
-            className={`px-4 py-2 rounded-lg flex items-center font-medium transition-all duration-200 min-w-[80px] justify-center ${
-              isAdding
-                ? "bg-green-500 dark:bg-green-600 text-white"
-                : itemInCart
-                ? "bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 text-white"
-                : "bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white"
-            }`}
-            variants={buttonVariants}
-            whileTap="tap"
-            onClick={handleAddToCart}
-            disabled={isAdding}
-          >
-            {isAdding ? (
-              <motion.div
-                className="flex items-center gap-1"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <Check className="h-4 w-4" />
-                <span className="text-sm">Added!</span>
-              </motion.div>
-            ) : itemInCart ? (
-              <motion.div
-                className="flex items-center gap-1"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <ShoppingCart className="h-4 w-4" />
-                <span className="text-sm">Add More</span>
-              </motion.div>
-            ) : (
-              <>
-                <ShoppingCart className="h-4 w-4 mr-1" />
-                Add
-              </>
-            )}
-          </motion.button>
+          <AddRemoveButton product={product} />
         </motion.div>
       </div>
     </motion.div>

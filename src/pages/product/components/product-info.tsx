@@ -1,17 +1,9 @@
+import { AddRemoveButton } from "@/components";
 import type { Product } from "@/store/useCartStore";
 import useCartStore from "@/store/useCartStore";
 import useWishlistStore from "@/store/useWishlistStore";
 import { motion } from "framer-motion";
-import {
-  Heart,
-  Minus,
-  Plus,
-  RotateCcw,
-  Shield,
-  ShoppingCart,
-  Star,
-  Truck,
-} from "lucide-react";
+import { Heart, RotateCcw, Shield, Star, Truck } from "lucide-react";
 import React, { useState } from "react";
 import { heartVariants, itemVariants } from "../common/constants";
 import ProductShareButton from "./product-share-button";
@@ -22,7 +14,6 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
 
   // Cart store hooks
   const addToCart = useCartStore((state) => state.addToCart);
-  const updateQuantity = useCartStore((state) => state.updateQuantity);
 
   // Wishlist store hooks
   const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
@@ -42,18 +33,8 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
     state.items.some((item) => item.id === product.id)
   );
 
-  const updateCartQuantity = (action: "-" | "+") => {
-    if (action === "+") updateQuantity(product.id, cartQuantity + 1);
-    else updateQuantity(product.id, cartQuantity - 1);
-  };
-
   const handleToggleLike = () => {
     toggleWishlist(product);
-  };
-
-  const handleAddToCart = async () => {
-    if (!cartQuantity) addToCart(product);
-    else updateQuantity(product.id, cartQuantity + 1);
   };
 
   const handleMoveToCart = () => {
@@ -260,49 +241,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
         transition={{ delay: 1.0 }}
       >
         <div className="flex items-center space-x-4">
-          {cartQuantity > 0 && (
-            <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg">
-              <button
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-md"
-                onClick={() => updateCartQuantity("-")}
-              >
-                <Minus className="h-4 w-4" />
-              </button>
-              <span className="px-4 py-2 font-medium min-w-[60px] text-center">
-                {cartQuantity}
-              </span>
-              <button
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-md"
-                onClick={() => updateCartQuantity("+")}
-              >
-                <Plus className="h-4 w-4" />
-              </button>
-            </div>
-          )}
-
-          <motion.button
-            className={`flex-1 px-8 py-3 rounded-lg flex items-center justify-center font-semibold transition-all duration-200 space-x-2 ${
-              itemInCart
-                ? "bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 text-white"
-                : "bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white"
-            }`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0 }}
-            onClick={handleAddToCart}
-          >
-            {itemInCart ? (
-              <>
-                <ShoppingCart className="h-5 w-5" />
-                <span>Add More ({cartQuantity} in cart)</span>
-              </>
-            ) : (
-              <>
-                <ShoppingCart className="h-5 w-5" />
-                <span>Add to Cart</span>
-              </>
-            )}
-          </motion.button>
+          <AddRemoveButton product={product} size="large" />
         </div>
 
         {/* Wishlist Actions */}

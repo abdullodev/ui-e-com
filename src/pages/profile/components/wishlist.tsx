@@ -1,6 +1,7 @@
 import { PageTransitionWrapper, ProductCard } from "@/components";
 import useWishlistStore from "@/store/useWishlistStore";
 import { Heart } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Wishlist = () => {
   const {
@@ -58,12 +59,25 @@ const Wishlist = () => {
           </div>
 
           {wishlistItems.length > 0 && (
-            <button
+            <motion.button
               onClick={handleClearWishlist}
-              className="text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium transition-colors"
+              className="px-3 py-1.5 rounded-lg text-sm font-medium 
+               text-red-600 dark:text-red-400 
+               bg-red-50 dark:bg-red-500/10 
+               hover:bg-red-100 dark:hover:bg-red-500/20 
+               hover:text-red-700 dark:hover:text-red-300
+               transition-colors duration-300 shadow-sm"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              whileHover={{
+                scale: 1.08,
+                boxShadow: "0px 4px 12px rgba(0,0,0,0.15)",
+              }}
+              whileTap={{ scale: 0.95 }}
             >
               Clear All
-            </button>
+            </motion.button>
           )}
         </div>
 

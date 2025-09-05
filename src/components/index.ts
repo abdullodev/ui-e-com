@@ -8,6 +8,7 @@ import FadeInSection from "./animations/faidin-section";
 import ScrollAnimation from "./animations/scroll-animation";
 import ProductCard from "./features/product-card/product-card";
 import CategoryCard from "./features/category-card/category-card";
+import AddRemoveButton from "./features/add-remove-button";
 
 export {
   Navbar,
@@ -19,5 +20,6 @@ export {
   FadeInSection,
   ScrollAnimation,
   ProductCard,
-  CategoryCard
+  CategoryCard,
+  AddRemoveButton,
 };

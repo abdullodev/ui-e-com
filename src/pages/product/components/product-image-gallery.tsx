@@ -73,25 +73,44 @@ const ProductImageGallery: React.FC<{ product: Product }> = ({ product }) => {
           <>
             <motion.button
               onClick={goToPrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/80 dark:bg-gray-800/80 shadow-lg flex items-center justify-center hover:bg-white dark:hover:bg-gray-800 transition-all"
-              initial={{ opacity: 0, x: -20 }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 
+             w-10 h-10 rounded-full bg-white/70 dark:bg-gray-600/40 
+             shadow-md backdrop-blur-sm flex items-center justify-center 
+             hover:bg-white/90 dark:hover:bg-gray-600/60 
+             hover:shadow-lg transition-colors duration-300"
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              transition={{
+                type: "spring",
+                stiffness: 120,
+                damping: 20,
+                delay: 0.1,
+              }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.92 }}
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-200" />
             </motion.button>
+
             <motion.button
               onClick={goToNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/80 dark:bg-gray-800/80 shadow-lg flex items-center justify-center hover:bg-white dark:hover:bg-gray-800 transition-all"
-              initial={{ opacity: 0, x: 20 }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 
+             w-10 h-10 rounded-full bg-white/70 dark:bg-gray-600/40 
+             shadow-md backdrop-blur-sm flex items-center justify-center 
+             hover:bg-white/90 dark:hover:bg-gray-600/60 
+             hover:shadow-lg transition-colors duration-300"
+              initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              transition={{
+                type: "spring",
+                stiffness: 120,
+                damping: 20,
+                delay: 0.1,
+              }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.92 }}
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-200" />
             </motion.button>
           </>
         )}
