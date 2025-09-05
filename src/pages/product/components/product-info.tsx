@@ -8,7 +8,6 @@ import {
   Minus,
   Plus,
   RotateCcw,
-  Share2,
   Shield,
   ShoppingCart,
   Star,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { heartVariants, itemVariants } from "../common/constants";
+import ProductShareButton from "./product-share-button";
 
 const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
   const [isLike, setIsLike] = useState(false);
@@ -129,13 +129,10 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
             />
           </motion.button>
 
-          <motion.button
-            className="bg-white dark:bg-gray-800 rounded-full p-3 shadow-md transition-colors border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Share2 className="h-6 w-6 text-gray-600 dark:text-gray-400" />
-          </motion.button>
+          <ProductShareButton
+            url={`https://ui-e-com.vercel.app/products/${product.id}`}
+            key={"share-button"}
+          />
         </div>
       </div>
 
