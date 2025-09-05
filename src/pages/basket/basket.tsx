@@ -72,7 +72,7 @@ const Basket: React.FC = () => {
 
     setTimeout(() => {
       setIsLike(false);
-    }, 500);
+    }, 0);
   };
 
   // Calculations
@@ -162,7 +162,6 @@ const Basket: React.FC = () => {
                   <div className="flex flex-col items-end space-y-2">
                     <motion.button
                       className={`rounded-full p-2 shadow-md transition-all duration-300 border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700`}
-                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                       onClick={() => removeItemCompletely(item.id)}
@@ -176,7 +175,6 @@ const Basket: React.FC = () => {
                           ? "bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700 scale-105"
                           : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                       }`}
-                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                       onClick={() => handleToggleWishlist(item)}

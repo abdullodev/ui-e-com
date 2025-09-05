@@ -48,7 +48,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
 
     setTimeout(() => {
       setIsUpdating(false);
-    }, 500);
+    }, 0);
   };
 
   const handleToggleLike = () => {
@@ -57,7 +57,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
 
     setTimeout(() => {
       setIsLike(false);
-    }, 500);
+    }, 0);
   };
 
   const handleAddToCart = async () => {
@@ -69,7 +69,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
     // Add a delay for better UX
     setTimeout(() => {
       setIsAddingToCart(false);
-    }, 500);
+    }, 700);
   };
 
   const handleMoveToCart = () => {

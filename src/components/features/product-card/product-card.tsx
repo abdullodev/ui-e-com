@@ -45,7 +45,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
 
     setTimeout(() => {
       setIsLike(false);
-    }, 500);
+    }, 0);
   };
 
   const handleAddToCart = async (e: React.MouseEvent) => {
@@ -58,7 +58,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
     // Add a small delay for better UX
     setTimeout(() => {
       setIsAdding(false);
-    }, 500);
+    }, 700);
   };
 
   const handleCardClick = () => {
