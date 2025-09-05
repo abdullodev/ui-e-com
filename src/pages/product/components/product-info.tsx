@@ -3,7 +3,6 @@ import useCartStore from "@/store/useCartStore";
 import useWishlistStore from "@/store/useWishlistStore";
 import { motion } from "framer-motion";
 import {
-  Check,
   Heart,
   Minus,
   Plus,
@@ -18,58 +17,43 @@ import { heartVariants, itemVariants } from "../common/constants";
 import ProductShareButton from "./product-share-button";
 
 const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
-  const [isLike, setIsLike] = useState(false);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [selectedColor, setSelectedColor] = useState(product.colors[0].name);
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
 
   // Cart store hooks
   const addToCart = useCartStore((state) => state.addToCart);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
-  const isInCart = useCartStore((state) => state.isInCart);
-  const getItemQuantity = useCartStore((state) => state.getItemQuantity);
 
   // Wishlist store hooks
   const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
-  const isInWishlist = useWishlistStore((state) => state.isInWishlist);
   const moveToCart = useWishlistStore((state) => state.moveToCart);
 
   // Get states
-  const itemInCart = isInCart(product.id);
-  const cartQuantity = getItemQuantity(product.id);
-  const isLiked = isInWishlist(product.id);
+  const itemInCart = useCartStore((state) =>
+    state.items.some((item) => item.id === product.id)
+  );
+
+  const cartQuantity = useCartStore((state) => {
+    const item = state.items.find((item) => item.id === product.id);
+    return item ? item.quantity : 0;
+  });
+
+  const isLiked = useWishlistStore((state) =>
+    state.items.some((item) => item.id === product.id)
+  );
 
   const updateCartQuantity = (action: "-" | "+") => {
-    setIsUpdating(true);
-
     if (action === "+") updateQuantity(product.id, cartQuantity + 1);
     else updateQuantity(product.id, cartQuantity - 1);
-
-    setTimeout(() => {
-      setIsUpdating(false);
-    }, 0);
   };
 
   const handleToggleLike = () => {
-    setIsLike(true);
     toggleWishlist(product);
-
-    setTimeout(() => {
-      setIsLike(false);
-    }, 0);
   };
 
   const handleAddToCart = async () => {
-    setIsAddingToCart(true);
-
     if (!cartQuantity) addToCart(product);
     else updateQuantity(product.id, cartQuantity + 1);
-
-    // Add a delay for better UX
-    setTimeout(() => {
-      setIsAddingToCart(false);
-    }, 700);
   };
 
   const handleMoveToCart = () => {
@@ -118,7 +102,6 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleToggleLike}
-            disabled={isLike}
           >
             <Heart
               className={`h-6 w-6 transition-all duration-300 ${
@@ -130,7 +113,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
           </motion.button>
 
           <ProductShareButton
-            url={`https://ui-e-com.vercel.app/products/${product.id}`}
+            url={`https://ui-e-com.vercel.app/product/${product.id}`}
             key={"share-button"}
           />
         </div>
@@ -282,7 +265,6 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
               <button
                 className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-md"
                 onClick={() => updateCartQuantity("-")}
-                disabled={isUpdating}
               >
                 <Minus className="h-4 w-4" />
               </button>
@@ -292,7 +274,6 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
               <button
                 className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-md"
                 onClick={() => updateCartQuantity("+")}
-                disabled={isUpdating}
               >
                 <Plus className="h-4 w-4" />
               </button>
@@ -301,9 +282,7 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
 
           <motion.button
             className={`flex-1 px-8 py-3 rounded-lg flex items-center justify-center font-semibold transition-all duration-200 space-x-2 ${
-              isAddingToCart
-                ? "bg-green-500 dark:bg-green-600 text-white"
-                : itemInCart
+              itemInCart
                 ? "bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 text-white"
                 : "bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white"
             }`}
@@ -311,14 +290,8 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0 }}
             onClick={handleAddToCart}
-            disabled={isAddingToCart}
           >
-            {isAddingToCart ? (
-              <>
-                <Check className="h-5 w-5" />
-                <span>Adding...</span>
-              </>
-            ) : itemInCart ? (
+            {itemInCart ? (
               <>
                 <ShoppingCart className="h-5 w-5" />
                 <span>Add More ({cartQuantity} in cart)</span>

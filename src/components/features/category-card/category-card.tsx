@@ -26,6 +26,7 @@ const CategoryCard = ({ category, index }: CategoryCardProps) => {
           alt={category.name}
           className="w-full h-48 object-cover"
           variants={imageVariants}
+          loading="lazy"
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent dark:from-black/80 dark:to-transparent"></div>
