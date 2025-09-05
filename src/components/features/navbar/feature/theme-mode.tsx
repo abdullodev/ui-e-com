@@ -1,8 +1,9 @@
-import { useDarkMode } from "@/hooks/useDarkMode";
+import { useThemeStore } from "@/store/useThemStore";
 import { Monitor, Moon, Sun } from "lucide-react";
 
 const ThemeMode = () => {
-  const { theme, setLightTheme, setDarkTheme, setSystemTheme } = useDarkMode();
+  const { theme, setLightTheme, setDarkTheme, setSystemTheme } =
+    useThemeStore();
 
   return (
     <div className="absolute p-2 right-0 mt-2 w-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50">

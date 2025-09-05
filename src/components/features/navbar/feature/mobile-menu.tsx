@@ -1,11 +1,12 @@
-import { useDarkMode } from "@/hooks/useDarkMode";
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
+import { useThemeStore } from "@/store/useThemStore";
 import { Monitor, Moon, Search, Sun } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { nav_items } from "../common/constants";
 
 const MobileMenu = () => {
-  const { theme, setLightTheme, setDarkTheme, setSystemTheme } = useDarkMode();
+  const { theme, setLightTheme, setDarkTheme, setSystemTheme } =
+    useThemeStore();
   const { navigateWithTransition } = useNavigationTransition();
 
   const { pathname } = useLocation();

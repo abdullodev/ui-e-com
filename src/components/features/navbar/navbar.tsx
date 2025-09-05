@@ -1,6 +1,6 @@
-import { useDarkMode } from "@/hooks/useDarkMode";
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
 import useCartStore from "@/store/useCartStore";
+import { useThemeStore } from "@/store/useThemStore";
 import {
   Heart,
   Menu,
@@ -45,7 +45,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const { navigateWithTransition } = useNavigationTransition();
-  const { theme } = useDarkMode();
+  const { theme } = useThemeStore();
 
   const { pathname } = useLocation();
 
