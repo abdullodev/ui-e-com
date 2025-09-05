@@ -15,11 +15,7 @@ import {
   Truck,
 } from "lucide-react";
 import React, { useState } from "react";
-import {
-  buttonVariants,
-  heartVariants,
-  itemVariants,
-} from "../common/constants";
+import { heartVariants, itemVariants } from "../common/constants";
 
 const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
   const [isLike, setIsLike] = useState(false);
@@ -227,9 +223,15 @@ const ProductInfo: React.FC<{ product: Product }> = ({ product }) => {
                   ? "border-blue-500 dark:border-blue-400 scale-110"
                   : "border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
               }`}
-              variants={buttonVariants}
               style={{ backgroundColor: color.hex }}
               onClick={() => setSelectedColor(color.name)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: 1,
+                scale: selectedColor === color.name ? 1.1 : 1,
+              }}
               transition={{ delay: 0.8 + index * 0.1 }}
             />
           ))}
