@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Footer, Navbar, PageTransitionWrapper } from "./components";
 import { PageTransitionProvider } from "./components/animations/page-transition-context";
 import { useScrollToTop } from "./hooks/useScrollToTop";
@@ -34,6 +34,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<Product />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>
 

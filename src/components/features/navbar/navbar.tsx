@@ -1,20 +1,11 @@
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
 import useCartStore from "@/store/useCartStore";
 import { useThemeStore } from "@/store/useThemStore";
-import {
-  Heart,
-  Menu,
-  Monitor,
-  Moon,
-  Search,
-  ShoppingCart,
-  Sun,
-  User,
-  X,
-} from "lucide-react";
+import { Menu, Search, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import MobileMenu from "./feature/mobile-menu";
+import NavUser from "./feature/nav-user";
 import ThemeMode from "./feature/theme-mode";
 
 const navbars = [
@@ -43,26 +34,13 @@ const Navbar = () => {
 
   const hasInCart = items?.length > 0;
 
-  const navigate = useNavigate();
   const { navigateWithTransition } = useNavigationTransition();
-  const { theme } = useThemeStore();
+  const { theme, setDarkTheme, setLightTheme, setSystemTheme } =
+    useThemeStore();
 
   const { pathname } = useLocation();
 
   const isActive = (path: string) => pathname === path;
-
-  const getThemeIcon = () => {
-    switch (theme) {
-      case "light":
-        return <Sun className="h-5 w-5" />;
-      case "dark":
-        return <Moon className="h-5 w-5" />;
-      case "system":
-        return <Monitor className="h-5 w-5" />;
-      default:
-        return <Sun className="h-5 w-5" />;
-    }
-  };
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-lg dark:shadow-gray-800 sticky top-0 z-50 transition-colors duration-200">
@@ -113,31 +91,17 @@ const Navbar = () => {
 
           {/* Right side icons */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* Theme Toggle */}
-            <div className="relative">
-              <button
-                className="text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer p-1"
-                onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
-              >
-                {getThemeIcon()}
-              </button>
+            {/* Theme Dropdown */}
+            <ThemeMode
+              setDarkTheme={setDarkTheme}
+              setLightTheme={setLightTheme}
+              setSystemTheme={setSystemTheme}
+              theme={theme}
+              key="theme_mode"
+            />
 
-              {/* Theme Dropdown */}
-              {isThemeMenuOpen && <ThemeMode />}
-            </div>
+            <NavUser />
 
-            <button
-              className="text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer"
-              onClick={() => navigateWithTransition("/profile")}
-            >
-              <User className="h-6 w-6" />
-            </button>
-            <button
-              className="text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 cursor-pointer"
-              onClick={() => navigate("/profile", { state: "wishlist" })}
-            >
-              <Heart className="h-6 w-6" />
-            </button>
             <button
               className="text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 relative cursor-pointer"
               onClick={() => navigateWithTransition("/basket")}
