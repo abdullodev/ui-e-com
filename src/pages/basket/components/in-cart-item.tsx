@@ -20,7 +20,7 @@ const InCartItem = ({ item, index }: Props) => {
   return (
     <div
       key={item.id}
-      className={`p-6 ${
+      className={`p-2 ${
         index !== cartItems.length - 1
           ? "border-b border-gray-100 dark:border-gray-700"
           : ""
@@ -35,7 +35,7 @@ const InCartItem = ({ item, index }: Props) => {
           />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 mb-2">
             {item.name}
           </h3>
           <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
@@ -43,7 +43,7 @@ const InCartItem = ({ item, index }: Props) => {
             <span>Size: {item.size}</span>
           </div>
           <div className="flex items-center mb-4">
-            <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
+            <span className="text-md font-bold text-gray-900 dark:text-gray-100">
               ${item.price.toFixed(2)}
             </span>
             <span className="text-sm text-gray-500 dark:text-gray-400 line-through ml-2">
@@ -65,7 +65,7 @@ const InCartItem = ({ item, index }: Props) => {
             <Trash2 className="h-5 w-5 text-gray-600 dark:text-gray-400 transition-all duration-300 hover:text-red-500 dark:hover:text-red-500" />
           </motion.button>
           <motion.button
-            className={`rounded-full p-2 shadow-md transition-all duration-300 border ${
+            className={`mt-2 rounded-full p-2 shadow-md transition-all duration-300 border ${
               isLiked
                 ? "bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700 scale-105"
                 : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"

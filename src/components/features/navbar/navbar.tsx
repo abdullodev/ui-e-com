@@ -1,9 +1,9 @@
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
-import useCartStore from "@/store/useCartStore";
 import { useThemeStore } from "@/store/useThemStore";
-import { Menu, Search, ShoppingCart, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import DrawerCart from "./feature/drawer-cart";
 import MobileMenu from "./feature/mobile-menu";
 import NavUser from "./feature/nav-user";
 import ThemeMode from "./feature/theme-mode";
@@ -29,10 +29,6 @@ const navbars = [
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
-
-  const items = useCartStore((state) => state.items);
-
-  const hasInCart = items?.length > 0;
 
   const { navigateWithTransition } = useNavigationTransition();
   const { theme, setDarkTheme, setLightTheme, setSystemTheme } =
@@ -102,17 +98,7 @@ const Navbar = () => {
 
             <NavUser />
 
-            <button
-              className="text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 relative cursor-pointer"
-              onClick={() => navigateWithTransition("/basket")}
-            >
-              <ShoppingCart className="h-6 w-6" />
-              {hasInCart && (
-                <span className="absolute -top-2 -right-2 bg-red-500 dark:bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {items.length}
-                </span>
-              )}
-            </button>
+            <DrawerCart />
           </div>
 
           {/* Mobile menu button */}
