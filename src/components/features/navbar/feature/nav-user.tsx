@@ -3,18 +3,10 @@ import CustomMenu from "@/components/custom-ui/custom-menu";
 import CustomModal from "@/components/custom-ui/custom-modal";
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
 import { motion } from "framer-motion";
-import {
-  Bell,
-  ChevronDown,
-  CreditCard,
-  Heart,
-  LogOut,
-  Settings,
-  ShoppingBag,
-  User,
-} from "lucide-react";
+import { ChevronDown, Heart, LogOut, ShoppingBag, User } from "lucide-react";
 import React, { useState } from "react";
 import Auth from "../../auth";
+import { useNavigate } from "react-router-dom";
 
 // Main NavUser Component using CustomMenu
 const NavUser: React.FC = () => {
@@ -27,21 +19,10 @@ const NavUser: React.FC = () => {
     avatar: null,
   });
 
+  const navigate = useNavigate();
   const { navigateWithTransition } = useNavigationTransition();
 
-  //   const handleLogin = () => {
-  //     // Mock login - replace with actual login logic
-  //     setUser({
-  //       isAuthenticated: true,
-  //       name: "John Doe",
-  //       email: "john@example.com",
-  //       avatar: null,
-  //     });
-  //     setShowAuthDialog(false);
-  //   };
-
   const handleLogout = () => {
-    // Mock logout - replace with actual logout logic
     setUser({
       isAuthenticated: false,
       name: "",
@@ -56,7 +37,6 @@ const NavUser: React.FC = () => {
       setShowUserMenu(!showUserMenu);
     } else {
       setShowAuthDialog(true);
-      // navigateWithTransition("/auth");
     }
   };
 
@@ -64,7 +44,6 @@ const NavUser: React.FC = () => {
   const userMenuSections: MenuSection[] = [
     {
       title: "Account",
-      description: "Manage your account settings",
       items: [
         {
           key: "profile",
@@ -78,40 +57,14 @@ const NavUser: React.FC = () => {
           icon: ShoppingBag,
           label: "Orders",
           description: "Track your order history",
-          action: () => navigateWithTransition("/orders"),
+          action: () => navigate("/profile", { state: "orders" }),
         },
         {
           key: "wishlist",
           icon: Heart,
           label: "Wishlist",
           description: "Your saved items",
-          action: () => navigateWithTransition("/wishlist"),
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      items: [
-        {
-          key: "payment",
-          icon: CreditCard,
-          label: "Payment Methods",
-          description: "Manage your payment options",
-          action: () => navigateWithTransition("/payment"),
-        },
-        {
-          key: "notifications",
-          icon: Bell,
-          label: "Notifications",
-          description: "Notification preferences",
-          action: () => navigateWithTransition("/notifications"),
-        },
-        {
-          key: "settings",
-          icon: Settings,
-          label: "Account Settings",
-          description: "Privacy and security",
-          action: () => navigateWithTransition("/settings"),
+          action: () => navigate("/profile", { state: "wishlist" }),
         },
       ],
     },

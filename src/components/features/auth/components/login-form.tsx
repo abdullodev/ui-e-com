@@ -4,6 +4,7 @@ import React from "react";
 import type { LoginFormData } from "../auth";
 import InputField from "./input-field";
 import SubmitButton from "./submit-button";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Login Form Component
 const LoginForm: React.FC<{
@@ -62,11 +63,7 @@ const LoginForm: React.FC<{
         transition={{ duration: 0.3, delay: 0.2 }}
       >
         <div className="flex items-center">
-          <input
-            id="remember-me"
-            type="checkbox"
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-          />
+          <Checkbox id="remember-me" name="remember" />
           <label
             htmlFor="remember-me"
             className="ml-2 block text-sm text-gray-900 dark:text-gray-300"

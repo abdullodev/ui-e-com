@@ -4,6 +4,7 @@ import React from "react";
 import type { RegisterFormData } from "../auth";
 import InputField from "./input-field";
 import SubmitButton from "./submit-button";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Register Form Component
 const RegisterForm: React.FC<{
@@ -119,12 +120,8 @@ const RegisterForm: React.FC<{
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
       >
-        <input
-          id="terms"
-          type="checkbox"
-          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-          required
-        />
+        <Checkbox id="terms" name="terms" />
+
         <label
           htmlFor="terms"
           className="ml-2 block text-sm text-gray-900 dark:text-gray-300"
