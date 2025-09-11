@@ -11,6 +11,7 @@ import Navbar from "./features/navbar/navbar";
 import ProductCard from "./features/product-card/product-card";
 import Auth from "./features/auth";
 import CustomModal from "./custom-ui/custom-modal";
+import CustomDrawer from "./custom-ui/custom-drawer";
 
 export {
   AddRemoveButton,
@@ -25,5 +26,6 @@ export {
   ProductCard,
   ScrollAnimation,
   Auth,
-  CustomModal
+  CustomModal,
+  CustomDrawer,
 };

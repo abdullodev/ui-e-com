@@ -3,6 +3,7 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerHeader,
+  DrawerOverlay,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
@@ -52,6 +53,7 @@ const DrawerCart: React.FC<DrawerCartProps> = ({ className = "" }) => {
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
+      <DrawerOverlay className="fixed inset-0 z-[999] bg-black/10 dark:bg-black/10 backdrop-blur-sm" />
       <DrawerTrigger asChild>
         <button
           className={`relative flex items-center justify-center p-2 text-gray-500 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200  ${className}`}
@@ -76,7 +78,7 @@ const DrawerCart: React.FC<DrawerCartProps> = ({ className = "" }) => {
         </button>
       </DrawerTrigger>
 
-      <DrawerContent className="min-w-[540px] ml-auto h-screen bg-white dark:bg-gray-900 flex flex-col">
+      <DrawerContent className="min-w-[540px] ml-auto h-screen bg-white dark:bg-gray-900  flex flex-col">
         {/* Header */}
         <DrawerHeader className="border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex-shrink-0">
           <DrawerTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
