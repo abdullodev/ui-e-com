@@ -1,30 +1,12 @@
 import { useNavigationTransition } from "@/hooks/useNavigateTransition";
 import { useThemeStore } from "@/store/useThemStore";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import DrawerCart from "./feature/drawer-cart";
-import MobileMenu from "./feature/mobile-menu";
+import Language from "./feature/language";
 import NavUser from "./feature/nav-user";
+import SearchBar from "./feature/search-bar";
 import ThemeMode from "./feature/theme-mode";
-
-const navbars = [
-  {
-    key: "1",
-    to: "/",
-    label: "Home",
-  },
-  {
-    key: "2",
-    to: "/categories",
-    label: "Categories",
-  },
-  {
-    key: "3",
-    to: "/products",
-    label: "Products",
-  },
-];
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -33,10 +15,6 @@ const Navbar = () => {
   const { navigateWithTransition } = useNavigationTransition();
   const { theme, setDarkTheme, setLightTheme, setSystemTheme } =
     useThemeStore();
-
-  const { pathname } = useLocation();
-
-  const isActive = (path: string) => pathname === path;
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-lg dark:shadow-gray-800 sticky top-0 z-50 transition-colors duration-200">
@@ -48,45 +26,18 @@ const Navbar = () => {
               className="text-2xl font-bold text-blue-600 dark:text-blue-400 cursor-pointer transition-colors duration-200"
               onClick={() => navigateWithTransition("/")}
             >
-              GrapeMart
+              Grape
             </h1>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navbars.map((nav) => (
-                <button
-                  key={nav.key}
-                  onClick={() => navigateWithTransition(nav.to)}
-                  className={`hover:text-blue-600 dark:hover:text-blue-400 ${
-                    isActive(nav.to)
-                      ? "text-blue-600 dark:text-blue-400"
-                      : "text-gray-500 dark:text-gray-300"
-                  } px-3 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer`}
-                >
-                  {nav.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Search Bar */}
-          <div className="hidden md:block flex-1 max-w-lg mx-8">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:placeholder-gray-400 dark:focus:placeholder-gray-500 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 transition-colors duration-200"
-              />
-            </div>
           </div>
 
           {/* Right side icons */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Search Bar */}
+            <SearchBar />
+
+            {/* Language */}
+            <Language />
+
             {/* Theme Dropdown */}
             <ThemeMode
               setDarkTheme={setDarkTheme}
@@ -116,9 +67,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && <MobileMenu />}
 
       {/* Backdrop for theme menu */}
       {isThemeMenuOpen && (

@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold text-blue-400 mb-4">GrapeMart</h3>
+            <h3 className="text-2xl font-bold text-blue-400 mb-4">Grape</h3>
             <p className="text-gray-300 mb-6 max-w-md">
               Your one-stop destination for quality products at unbeatable
               prices. We're committed to providing exceptional shopping
@@ -139,7 +139,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center">
           <p className="text-gray-400">
-            © 2025 GrapeMart. All rights reserved. Made with ❤️ for amazing
+            © 2025 Grape. All rights reserved. Made with ❤️ for amazing
             customers.
           </p>
         </div>
