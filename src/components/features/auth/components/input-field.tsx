@@ -1,3 +1,5 @@
+import CustomLabel from "@/components/custom-ui/custom-label";
+import { Input } from "@/components/ui/input";
 import { AnimatePresence, motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import React from "react";
@@ -30,23 +32,21 @@ const InputField: React.FC<{
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-        {label}
-      </label>
+      <CustomLabel label={label} />
       <div className="relative">
         {icon && (
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             {icon}
           </div>
         )}
-        <motion.input
+        <Input
           {...register}
           type={
             showPasswordToggle ? (showPassword ? "text" : "password") : type
           }
           className={`block w-full ${icon ? "pl-10" : "pl-3"} ${
             showPasswordToggle ? "pr-10" : "pr-3"
-          } py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
+          }`}
           placeholder={placeholder}
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
         />

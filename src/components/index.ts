@@ -12,6 +12,7 @@ import ProductCard from "./features/product-card/product-card";
 import Auth from "./features/auth";
 import CustomModal from "./custom-ui/custom-modal";
 import CustomDrawer from "./custom-ui/custom-drawer";
+import CustomLabel from "./custom-ui/custom-label";
 
 export {
   AddRemoveButton,
@@ -28,4 +29,5 @@ export {
   Auth,
   CustomModal,
   CustomDrawer,
+  CustomLabel,
 };

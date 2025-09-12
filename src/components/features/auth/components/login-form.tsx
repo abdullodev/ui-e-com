@@ -26,7 +26,7 @@ const LoginForm: React.FC<{
         label="Email address"
         type="email"
         placeholder="Enter your email"
-        icon={<Mail className="h-5 w-5 text-gray-400" />}
+        icon={<Mail className="h-3 w-3 text-gray-400" />}
         register={form.register("email", {
           required: "Email is required",
           pattern: {
@@ -41,7 +41,7 @@ const LoginForm: React.FC<{
         label="Password"
         type="password"
         placeholder="Enter your password"
-        icon={<Lock className="h-5 w-5 text-gray-400" />}
+        icon={<Lock className="h-3 w-3 text-gray-400" />}
         register={form.register("password", {
           required: "Password is required",
           minLength: {

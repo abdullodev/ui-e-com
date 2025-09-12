@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import DrawerCart from "./feature/drawer-cart";
 import Language from "./feature/language";
+import { LocationSelector } from "./feature/location/location-selector";
 import NavUser from "./feature/nav-user";
 import SearchBar from "./feature/search-bar";
 import ThemeMode from "./feature/theme-mode";
@@ -21,13 +22,17 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <h1
-              className="text-2xl font-bold text-blue-600 dark:text-blue-400 cursor-pointer transition-colors duration-200"
-              onClick={() => navigateWithTransition("/")}
-            >
-              Grape
-            </h1>
+          <div className="flex gap-10 align-center">
+            <div className="flex-shrink-0">
+              <h1
+                className="text-2xl font-bold text-blue-600 dark:text-blue-400 cursor-pointer transition-colors duration-200"
+                onClick={() => navigateWithTransition("/")}
+              >
+                Grape
+              </h1>
+            </div>
+
+            <LocationSelector />
           </div>
 
           {/* Right side icons */}

@@ -109,7 +109,7 @@ const Auth: React.FC = () => {
 
           {/* Auth Card */}
           <motion.div
-            className="bg-white dark:bg-gray-800 p-8"
+            className="bg-white dark:bg-gray-800"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.2 }}
