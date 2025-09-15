@@ -63,7 +63,7 @@ const LocationForm = ({ onOpenChange }: Props) => {
 
   return (
     <motion.div
-      className="w-full lg:w-2/5 space-y-4"
+      className="space-y-4"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}

@@ -75,13 +75,15 @@ function LocationModal({
             </p>
           </DialogHeader>
 
-          <div className="flex flex-col lg:flex-row gap-6 mt-6">
+          <div className="w-full flex flex-col lg:flex-row gap-6 mt-6">
             {/* Left Side: Form */}
-            <LocationForm onOpenChange={onOpenChange} />
+            <div className="order-2 lg:order-1 w-full lg:w-2/5">
+              <LocationForm onOpenChange={onOpenChange} />
+            </div>
 
             {/* Right Side: Map */}
             <motion.div
-              className="w-full lg:w-3/5 h-[300px] sm:h-[500px] rounded-lg overflow-hidden border"
+              className="order-1 lg:order-2 w-full lg:w-3/5 h-[300px] sm:h-[500px] rounded-lg overflow-hidden border"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
