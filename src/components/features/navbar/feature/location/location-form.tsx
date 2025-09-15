@@ -74,7 +74,7 @@ const LocationForm = ({ onOpenChange }: Props) => {
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           className="w-full"
-          disabled={isReverseGeocoding}
+          disabled
         />
         {isReverseGeocoding && (
           <p className="text-xs text-blue-600">Manzil aniqlanmoqda...</p>

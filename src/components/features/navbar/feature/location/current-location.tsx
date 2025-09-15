@@ -19,7 +19,7 @@ function CurrentLocation() {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
-            map.setView([latitude, longitude], 15);
+            map.setView([latitude, longitude], 18);
             setCoords(latitude, longitude);
             setIsLoading(false);
           },

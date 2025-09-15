@@ -88,7 +88,7 @@ function LocationModal({
             >
               <MapContainer
                 center={[lat, lng]}
-                zoom={17}
+                zoom={18}
                 style={{ height: "100%", width: "100%" }}
                 className="min-h-[300px]"
                 scrollWheelZoom={true}
