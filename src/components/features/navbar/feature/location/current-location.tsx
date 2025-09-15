@@ -5,7 +5,7 @@ import { useMap } from "react-leaflet";
 
 function CurrentLocation() {
   const map = useMap();
-  const { setCoords } = useLocationStore();
+  const { setCurrentLocation } = useLocationStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const getCurrentLocation = useCallback(
@@ -18,9 +18,19 @@ function CurrentLocation() {
         setIsLoading(true);
         navigator.geolocation.getCurrentPosition(
           (position) => {
+            console.log("position", position);
             const { latitude, longitude } = position.coords;
+
             map.setView([latitude, longitude], 18);
-            setCoords(latitude, longitude);
+
+            setCurrentLocation({
+              id: "current",
+              address: "My Current Location", // will be updated later by reverse geocoding
+              lat: latitude,
+              lng: longitude,
+              details: {},
+            });
+
             setIsLoading(false);
           },
           (error) => {
@@ -54,7 +64,7 @@ function CurrentLocation() {
         alert("Geolocation is not supported by this browser.");
       }
     },
-    [map, setCoords]
+    [map, setCurrentLocation]
   );
 
   return (
@@ -68,7 +78,7 @@ function CurrentLocation() {
           disabled={isLoading}
           className="bg-white text-black hover:bg-gray-100 disabled:opacity-50 m-1 text-xs px-2 py-1"
           size="sm"
-          onMouseDown={(e) => e.stopPropagation()} // Additional prevention
+          onMouseDown={(e) => e.stopPropagation()} // Prevent drag interference
         >
           {isLoading ? "Loading..." : "📍 Current Location"}
         </Button>

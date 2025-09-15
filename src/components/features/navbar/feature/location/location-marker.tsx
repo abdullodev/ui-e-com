@@ -10,33 +10,49 @@ const markerIcon: any = new L.Icon({
 });
 
 function LocationMarker() {
-  const { setCoords, lat, lng } = useLocationStore();
+  const { currentLocation, setCurrentLocation } = useLocationStore();
   const [position, setPosition] = useState<[number, number]>([
-    41.2995, 69.2401,
+    41.2995,
+    69.2401, // fallback default
   ]);
 
+  // 📌 Update marker position when store changes
+  useEffect(() => {
+    if (currentLocation?.lat && currentLocation?.lng) {
+      setPosition([currentLocation.lat, currentLocation.lng]);
+    }
+  }, [currentLocation]);
+
+  // 📌 Handle map click → move marker + update store
   useMapEvents({
-    click(e: any) {
-      setPosition([e.latlng.lat, e.latlng.lng]);
-      setCoords(e.latlng.lat, e.latlng.lng);
+    click(e) {
+      const { lat, lng } = e.latlng;
+      setPosition([lat, lng]);
+      setCurrentLocation({
+        id: "current",
+        address: "Selected Location",
+        lat,
+        lng,
+        details: currentLocation?.details || {},
+      });
     },
   });
 
-  useEffect(() => {
-    if (lat && lng) {
-      setPosition([lat, lng]);
-    }
-  }, [lat, lng]);
-
-  // Handle marker drag
+  // 📌 Handle marker drag → update store
   const handleMarkerDrag = useCallback(
     (e: any) => {
       const marker = e.target;
-      const newPosition = marker.getLatLng();
-      setPosition([newPosition.lat, newPosition.lng]);
-      setCoords(newPosition.lat, newPosition.lng);
+      const { lat, lng } = marker.getLatLng();
+      setPosition([lat, lng]);
+      setCurrentLocation({
+        id: "current",
+        address: "Dragged Location",
+        lat,
+        lng,
+        details: currentLocation?.details || {},
+      });
     },
-    [setCoords]
+    [setCurrentLocation, currentLocation?.details]
   );
 
   return (

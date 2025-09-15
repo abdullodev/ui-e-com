@@ -5,7 +5,7 @@ import React, { type ReactNode } from "react";
 interface MenuItem {
   key: string;
   icon?: React.ComponentType<{ className?: string }>;
-  label: string;
+  label: ReactNode;
   description?: string;
   action: () => void;
   variant?: "default" | "danger" | "success";

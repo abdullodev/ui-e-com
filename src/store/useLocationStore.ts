@@ -1,31 +1,63 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-interface LocationState {
+interface LocationDetails {
+  sarlavha?: string;
+  uy?: string;
+  xonadon?: string;
+  qavat?: string;
+  kirish?: string;
+  izoh?: string;
+}
+
+export interface LocationItem {
+  id: string;
   address: string;
   lat: number;
   lng: number;
-  details: {
-    sarlavha?: string;
-    uy?: string;
-    xonadon?: string;
-    qavat?: string;
-    kirish?: string;
-    izoh?: string;
-  };
-  setAddress: (address: string) => void;
-  setCoords: (lat: number, lng: number) => void;
-  setDetails: (key: string, value: string) => void;
+  details: LocationDetails;
 }
 
-export const useLocationStore = create<LocationState>((set) => ({
-  address: "",
-  lat: 41.2995,
-  lng: 69.2401,
-  details: {},
-  setAddress: (address) => set({ address }),
-  setCoords: (lat, lng) => set({ lat, lng }),
-  setDetails: (key, value) =>
-    set((state) => ({
-      details: { ...state.details, [key]: value },
-    })),
-}));
+interface LocationState {
+  currentLocation: LocationItem | null;
+  locations: LocationItem[];
+
+  setCurrentLocation: (location: LocationItem) => void;
+  addLocation: (location: LocationItem) => void;
+  removeLocation: (id: string) => void;
+  updateLocation: (id: string, updated: Partial<LocationItem>) => void;
+  clearLocations: () => void;
+}
+
+export const useLocationStore = create<LocationState>()(
+  persist(
+    (set) => ({
+      currentLocation: null,
+      locations: [],
+
+      setCurrentLocation: (location) => set({ currentLocation: location }),
+
+      addLocation: (location) =>
+        set((state) => ({
+          locations: [...state.locations, location],
+        })),
+
+      removeLocation: (id) =>
+        set((state) => ({
+          locations: state.locations.filter((loc) => loc.id !== id),
+        })),
+
+      updateLocation: (id, updated) =>
+        set((state) => ({
+          locations: state.locations.map((loc) =>
+            loc.id === id ? { ...loc, ...updated } : loc
+          ),
+        })),
+
+      clearLocations: () => set({ locations: [] }),
+    }),
+    {
+      name: "location", // key in localStorage
+    }
+  )
+);

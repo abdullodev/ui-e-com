@@ -8,58 +8,74 @@ interface Props {
   onOpenChange: (e: boolean) => void;
 }
 const LocationForm = ({ onOpenChange }: Props) => {
-  const { address, setAddress, details, setDetails, lat, lng } =
+  const { currentLocation, setCurrentLocation, addLocation } =
     useLocationStore();
 
   const [isReverseGeocoding, setIsReverseGeocoding] = useState(false);
 
   const handleConfirmLocation = useCallback(() => {
-    if (!address.trim()) {
+    if (!currentLocation?.address.trim()) {
       alert("Iltimos, manzilni kiriting");
       return;
     }
+
+    addLocation({
+      ...currentLocation,
+      id: Date.now().toString(),
+    });
+
     onOpenChange(false);
-  }, [address, onOpenChange]);
+  }, [currentLocation, addLocation, onOpenChange]);
 
-  // Debounced reverse geocoding
   useEffect(() => {
-    if (lat !== 41.2995 || lng !== 69.2401) {
-      setIsReverseGeocoding(true);
+    if (!currentLocation?.lat || !currentLocation?.lng) return;
 
-      const timeoutId = setTimeout(() => {
-        // Reverse geocoding using Nominatim
-        fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            if (data && data.display_name) {
-              setAddress(data.display_name);
+    setIsReverseGeocoding(true);
+    const timeoutId = setTimeout(() => {
+      fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${currentLocation.lat}&lon=${currentLocation.lng}&zoom=18&addressdetails=1`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.display_name) {
+            setCurrentLocation({
+              ...currentLocation,
+              address: data.display_name,
+              details: {
+                ...currentLocation.details,
+                sarlavha:
+                  data.address.road ||
+                  data.address.street ||
+                  currentLocation.details?.sarlavha ||
+                  "",
+                uy:
+                  data.address.house_number ||
+                  currentLocation.details?.uy ||
+                  "",
+                xonadon:
+                  data.address.apartment ||
+                  currentLocation.details?.xonadon ||
+                  "",
+                qavat:
+                  data.address.floor || currentLocation.details?.qavat || "",
+                kirish:
+                  data.address.entrance ||
+                  currentLocation.details?.kirish ||
+                  "",
+                izoh: currentLocation.details?.izoh || "",
+              },
+            });
+          }
+          setIsReverseGeocoding(false);
+        })
+        .catch((error) => {
+          console.error("Error in reverse geocoding:", error);
+          setIsReverseGeocoding(false);
+        });
+    }, 500);
 
-              // Extract components from the address
-              const addressDetails = data.address;
-              if (addressDetails) {
-                setDetails(
-                  "sarlavha",
-                  addressDetails.road || addressDetails.street || ""
-                );
-                setDetails("uy", addressDetails.house_number || "");
-                setDetails("xonadon", addressDetails.apartment || "");
-                setDetails("qavat", addressDetails.floor || "");
-                setDetails("kirish", addressDetails.entrance || "");
-              }
-            }
-            setIsReverseGeocoding(false);
-          })
-          .catch((error) => {
-            console.error("Error in reverse geocoding:", error);
-            setIsReverseGeocoding(false);
-          });
-      }, 500); // 500ms debounce
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [lat, lng, setAddress, setDetails]);
+    return () => clearTimeout(timeoutId);
+  }, [currentLocation?.lat, currentLocation?.lng]);
 
   return (
     <motion.div
@@ -71,8 +87,13 @@ const LocationForm = ({ onOpenChange }: Props) => {
       <div className="space-y-2">
         <label className="text-sm font-medium">Manzil</label>
         <Input
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={currentLocation?.address || ""}
+          onChange={(e) =>
+            setCurrentLocation({
+              ...currentLocation!,
+              address: e.target.value,
+            })
+          }
           className="w-full"
           disabled
         />
@@ -84,8 +105,16 @@ const LocationForm = ({ onOpenChange }: Props) => {
       <div className="space-y-2">
         <label className="text-sm font-medium">Sarlavha</label>
         <Input
-          value={details.sarlavha || ""}
-          onChange={(e) => setDetails("sarlavha", e.target.value)}
+          value={currentLocation?.details?.sarlavha || ""}
+          onChange={(e) =>
+            setCurrentLocation({
+              ...currentLocation!,
+              details: {
+                ...currentLocation?.details,
+                sarlavha: e.target.value,
+              },
+            })
+          }
           className="w-full"
         />
       </div>
@@ -94,16 +123,29 @@ const LocationForm = ({ onOpenChange }: Props) => {
         <div className="space-y-1">
           <label className="text-sm font-medium">Uy raqami</label>
           <Input
-            value={details.uy || ""}
-            onChange={(e) => setDetails("uy", e.target.value)}
+            value={currentLocation?.details?.uy || ""}
+            onChange={(e) =>
+              setCurrentLocation({
+                ...currentLocation!,
+                details: { ...currentLocation?.details, uy: e.target.value },
+              })
+            }
             className="w-full"
           />
         </div>
         <div className="space-y-1">
           <label className="text-sm font-medium">Xonadon</label>
           <Input
-            value={details.xonadon || ""}
-            onChange={(e) => setDetails("xonadon", e.target.value)}
+            value={currentLocation?.details?.xonadon || ""}
+            onChange={(e) =>
+              setCurrentLocation({
+                ...currentLocation!,
+                details: {
+                  ...currentLocation?.details,
+                  xonadon: e.target.value,
+                },
+              })
+            }
             className="w-full"
           />
         </div>
@@ -113,16 +155,29 @@ const LocationForm = ({ onOpenChange }: Props) => {
         <div className="space-y-1">
           <label className="text-sm font-medium">Qavat</label>
           <Input
-            value={details.qavat || ""}
-            onChange={(e) => setDetails("qavat", e.target.value)}
+            value={currentLocation?.details?.qavat || ""}
+            onChange={(e) =>
+              setCurrentLocation({
+                ...currentLocation!,
+                details: { ...currentLocation?.details, qavat: e.target.value },
+              })
+            }
             className="w-full"
           />
         </div>
         <div className="space-y-1">
           <label className="text-sm font-medium">Kirish</label>
           <Input
-            value={details.kirish || ""}
-            onChange={(e) => setDetails("kirish", e.target.value)}
+            value={currentLocation?.details?.kirish || ""}
+            onChange={(e) =>
+              setCurrentLocation({
+                ...currentLocation!,
+                details: {
+                  ...currentLocation?.details,
+                  kirish: e.target.value,
+                },
+              })
+            }
             className="w-full"
           />
         </div>
@@ -131,8 +186,13 @@ const LocationForm = ({ onOpenChange }: Props) => {
       <div className="space-y-2">
         <label className="text-sm font-medium">Kuryerga izoh</label>
         <Input
-          value={details.izoh || ""}
-          onChange={(e) => setDetails("izoh", e.target.value)}
+          value={currentLocation?.details?.izoh || ""}
+          onChange={(e) =>
+            setCurrentLocation({
+              ...currentLocation!,
+              details: { ...currentLocation?.details, izoh: e.target.value },
+            })
+          }
           className="w-full"
         />
       </div>
@@ -140,7 +200,7 @@ const LocationForm = ({ onOpenChange }: Props) => {
       <Button
         onClick={handleConfirmLocation}
         className="w-full mt-6"
-        disabled={!address.trim() || isReverseGeocoding}
+        disabled={!currentLocation?.address?.trim() || isReverseGeocoding}
       >
         Manzilni tasdiqlash
       </Button>
