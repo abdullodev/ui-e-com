@@ -1,3 +1,5 @@
+export const DEFAULT_ZOOM = 17;
+
 export const nav_items = [
   {
     key: "1",

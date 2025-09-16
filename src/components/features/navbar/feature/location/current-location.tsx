@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useLocationStore } from "@/store/useLocationStore";
 import { useCallback, useState, type MouseEvent } from "react";
 import { useMap } from "react-leaflet";
+import { DEFAULT_ZOOM } from "../../common/constants";
 
 function CurrentLocation() {
   const map = useMap();
@@ -21,7 +22,7 @@ function CurrentLocation() {
             console.log("position", position);
             const { latitude, longitude } = position.coords;
 
-            map.setView([latitude, longitude], 18);
+            map.setView([latitude, longitude], DEFAULT_ZOOM);
 
             setCurrentLocation({
               id: "current",

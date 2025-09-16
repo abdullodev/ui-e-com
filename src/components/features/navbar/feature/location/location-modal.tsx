@@ -7,6 +7,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import CurrentLocation from "./current-location";
 import LocationForm from "./location-form";
 import LocationMarker from "./location-marker";
+import { DEFAULT_ZOOM } from "../../common/constants";
 
 function LocationModal({
   open,
@@ -52,7 +53,7 @@ function LocationModal({
                 currentLocation?.lat || 41.2995,
                 currentLocation?.lng || 69.2401,
               ]}
-              zoom={18}
+              zoom={DEFAULT_ZOOM}
               style={{ height: "100%", width: "100%" }}
               className="min-h-[300px]"
               scrollWheelZoom={true}
