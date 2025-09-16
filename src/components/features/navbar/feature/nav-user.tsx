@@ -7,36 +7,32 @@ import { ChevronDown, Heart, LogOut, ShoppingBag, User } from "lucide-react";
 import React, { useState } from "react";
 import Auth from "../../auth";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/store/useAuthStore";
 
 // Main NavUser Component using CustomMenu
 const NavUser: React.FC = () => {
-  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [user, setUser] = useState({
-    isAuthenticated: true, // Change to false to see unauthenticated state
-    name: "John Doe",
-    email: "john@example.com",
-    avatar: null,
-  });
+
+  const { openModal, closeModal, isOpenModal, setUser, user } = useAuth();
 
   const navigate = useNavigate();
   const { navigateWithTransition } = useNavigationTransition();
 
   const handleLogout = () => {
     setUser({
-      isAuthenticated: false,
-      name: "",
-      email: "",
-      avatar: null,
+      isAuth: false,
+      firstName: "",
+      phone: "",
+      lastName: "",
     });
     setShowUserMenu(false);
   };
 
   const handleUserClick = () => {
-    if (user.isAuthenticated) {
+    if (user?.isAuth) {
       setShowUserMenu(!showUserMenu);
     } else {
-      setShowAuthDialog(true);
+      openModal();
     }
   };
 
@@ -89,10 +85,10 @@ const NavUser: React.FC = () => {
         className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center"
         whileHover={{ scale: 1.1 }}
       >
-        {user.avatar ? (
+        {user?.avatar ? (
           <img
             src={user.avatar}
-            alt={user.name}
+            alt={user.firstName}
             className="w-10 h-10 rounded-full"
           />
         ) : (
@@ -101,9 +97,11 @@ const NavUser: React.FC = () => {
       </motion.div>
       <div>
         <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-          {user.name}
+          {user?.firstName}
         </p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          {user?.phone}
+        </p>
       </div>
     </div>
   );
@@ -116,7 +114,7 @@ const NavUser: React.FC = () => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      {user.isAuthenticated ? (
+      {user?.isAuth ? (
         <>
           <motion.div
             className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center"
@@ -125,7 +123,7 @@ const NavUser: React.FC = () => {
             {user.avatar ? (
               <img
                 src={user.avatar}
-                alt={user.name}
+                alt={user.firstName}
                 className="w-8 h-8 rounded-full"
               />
             ) : (
@@ -148,7 +146,7 @@ const NavUser: React.FC = () => {
   return (
     <>
       {/* User Menu using CustomMenu */}
-      {user.isAuthenticated ? (
+      {user?.isAuth ? (
         <CustomMenu
           trigger={userTrigger}
           sections={userMenuSections}
@@ -162,9 +160,9 @@ const NavUser: React.FC = () => {
         <div className="relative">{userTrigger}</div>
       )}
       <CustomModal
-        isOpen={showAuthDialog}
+        isOpen={isOpenModal}
         children={<Auth />}
-        onClose={() => setShowAuthDialog(false)}
+        onClose={() => closeModal()}
       />
     </>
   );
